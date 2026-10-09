@@ -7,7 +7,6 @@ func _enable_plugin() -> void:
 	# Add autoloads here.
 	pass
 
-
 func _disable_plugin() -> void:
 	# Remove autoloads here.
 	pass
