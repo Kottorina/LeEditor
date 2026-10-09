@@ -1,28 +1,34 @@
 extends Node
+class_name MainEditor
 
 var editor_data : LeFileSystem
-@export var editor_setting : EditorSetting = preload("uid://dkj31dmti5avt") ## ДЛЯ СОХРАНЕНИЯ СОСТОЯНИЯ РЕДАКТОРА
+@export var editor_setting : EditorSetting ## ДЛЯ СОХРАНЕНИЯ СОСТОЯНИЯ РЕДАКТОРА
 
 @export var editor_layer_dir_path : String = "res://addons/LeEditor/Objects/Layers/Editor"
 @export var link_layer_dir_path : String = "res://addons/LeEditor/Objects/Layers/Link"
 
 @export_group("System")
-@export var file_ui : MenuButton
-@export var layer_manager : Node
+@export var system_ar : Array[Node]
 
 @export_group("ui")
 @export var FileNameLab : Label
 
 func _ready() -> void:
-	if ! editor_setting or ! file_ui or ! FileNameLab or ! layer_manager:
-		push_error("ERROR START")
+	
+	if ! editor_setting or ! FileNameLab:
+		push_error("LOAD editor_setting ERROR")
 		return
-	file_ui.StartBake()
-	layer_manager.StartBake()
 	
 	FileNameLab.text = UiEditorConst.Empty
 	LoadEditorData(editor_setting.path_to_editor_data)
-
+	
+	for system : Node in system_ar:
+		var cal := Callable(system,EditorConst.StartBake)
+		if cal.is_valid():
+			cal.call()
+		else:
+			print(system.name," Dont Have", EditorConst.StartBake)
+	
 func GetArrayFromScriptAndDir( path : String, find_script : Script ) -> Array:
 	var dir = DirAccess.open(path)
 	if !dir:
@@ -85,6 +91,15 @@ func SaveCurrentEditorData() -> void:
 	if ! editor_data or ! editor_setting.path_to_editor_data:
 		push_error("editor_data Save ERROR")
 		return
+	
+	for system : Node in system_ar:
+		var cal := Callable(system,EditorConst.GetSaveContainer)
+		if cal.is_valid():
+			var save_cont : SaveContainer = cal.call()
+			editor_data.RewritingCategory(save_cont.data_key,save_cont.le_file_ar)
+		else:
+			print(system.name," Dont Have ", EditorConst.GetSaveContainer)
+	
 	ResourceSaver.save(editor_data, editor_setting.path_to_editor_data)
 ## СОХРАНЯЕТ ФАЙЛ НАСТРОЕК
 func SaveEditorSetting() -> void:

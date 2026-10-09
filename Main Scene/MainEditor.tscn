@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cv7jwmmq5cb4p"]
 
 [ext_resource type="Script" uid="uid://ct3vea5bq5x5v" path="res://addons/LeEditor/Main Scene/MainEditor.gd" id="1_t6pu0"]
+[ext_resource type="Resource" uid="uid://cqo3p45xtilea" path="res://addons/LeEditor/Objects/EditorSetting.tres" id="2_bqliu"]
 [ext_resource type="Theme" uid="uid://bwsyptdvotogc" path="res://addons/LeEditor/Objects/EditorTheme.tres" id="2_cw4tc"]
 [ext_resource type="Script" uid="uid://b17u2anbshfxq" path="res://addons/LeEditor/Main Scene/System/FileUi.gd" id="3_bs28w"]
 [ext_resource type="Theme" uid="uid://dglg5w03t8tsc" path="res://addons/LeEditor/Objects/EditorSmallTheme.tres" id="3_ulvws"]
@@ -8,8 +9,10 @@
 [ext_resource type="Script" uid="uid://cafpvhnljtusj" path="res://addons/LeEditor/Old/scene/in ui/EditorLayerManager.gd" id="12_t6pu0"]
 [ext_resource type="Script" uid="uid://dccq0y6xy1ay3" path="res://addons/LeEditor/Old/scene/in ui/graph_edit.gd" id="13_tey8d"]
 [ext_resource type="Script" uid="uid://c8qj3li15vno0" path="res://addons/LeEditor/Old/scene/setting_panel.gd" id="14_e73lv"]
+[ext_resource type="Script" uid="uid://8nkity7ndbby" path="res://addons/LeEditor/Main Scene/System/SceneManager.gd" id="15_4ecpn"]
 [ext_resource type="Script" uid="uid://laafe23yiddc" path="res://addons/LeEditor/Old/scene/in ui/Settings/FileSaveLoad.gd" id="15_6v83k"]
 [ext_resource type="Script" uid="uid://b8ttd15d68gc0" path="res://addons/LeEditor/Old/scene/in ui/Settings/PathManageer.gd" id="16_28lud"]
+[ext_resource type="Script" uid="uid://dfg821pwqs447" path="res://addons/LeEditor/Main Scene/controller.gd" id="16_v853t"]
 [ext_resource type="PackedScene" uid="uid://6devv7ol036q" path="res://addons/LeEditor/Old/scene/in ui/Settings/PathUi/PathUi.tscn" id="17_m4bvh"]
 [ext_resource type="Script" uid="uid://cjex7dj8gckg2" path="res://addons/LeEditor/Old/scene/path_baker.gd" id="18_t6pu0"]
 [ext_resource type="Script" uid="uid://21jxmcwtjhm1" path="res://addons/LeEditor/Main Scene/System/LayerManager.gd" id="19_0w74o"]
@@ -30,11 +33,12 @@ MarginContainer/constants/margin_right = 5
 MarginContainer/constants/margin_top = 5
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_dltes")
 
-[node name="MainEditor" type="Node" unique_id=544549692 node_paths=PackedStringArray("file_ui", "layer_manager", "FileNameLab")]
+[node name="MainEditor" type="Node" unique_id=169194402 node_paths=PackedStringArray("system_ar", "FileNameLab")]
 script = ExtResource("1_t6pu0")
-file_ui = NodePath("Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/FileUi")
-layer_manager = NodePath("LayerManager")
+editor_setting = ExtResource("2_bqliu")
+system_ar = [NodePath("Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/FileUi"), NodePath("LayerManager"), NodePath("SceneManager")]
 FileNameLab = NodePath("Panel/BaseEditorContainer/UpPanel/VBoxContainer/FileName")
+metadata/_custom_type_script = "uid://ct3vea5bq5x5v"
 
 [node name="Panel" type="PanelContainer" parent="." unique_id=657537674]
 anchors_preset = 15
@@ -69,10 +73,36 @@ main_editor = NodePath("../../../../../..")
 [node name="Layer" type="HBoxContainer" parent="Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel" unique_id=2071028384]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/Layer" unique_id=599911178]
+[node name="LayerLabel" type="Label" parent="Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/Layer" unique_id=599911178]
 layout_mode = 2
 
 [node name="LayerOption" type="OptionButton" parent="Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/Layer" unique_id=686132870]
+layout_mode = 2
+
+[node name="Scene" type="HBoxContainer" parent="Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel" unique_id=2019346331]
+layout_mode = 2
+
+[node name="SceneLabel" type="Label" parent="Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/Scene" unique_id=2035563609]
+layout_mode = 2
+
+[node name="SceneOption" type="OptionButton" parent="Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/Scene" unique_id=259455206]
+layout_mode = 2
+
+[node name="AddBut" type="Button" parent="Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/Scene" unique_id=3643383]
+layout_mode = 2
+
+[node name="DelBut" type="Button" parent="Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/Scene" unique_id=849553386]
+layout_mode = 2
+
+[node name="VSeparator" type="VSeparator" parent="Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/Scene" unique_id=1911766166]
+layout_mode = 2
+
+[node name="RenameTextEdit" type="TextEdit" parent="Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/Scene" unique_id=1078323677]
+layout_mode = 2
+scroll_fit_content_height = true
+scroll_fit_content_width = true
+
+[node name="RenameBut" type="Button" parent="Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/Scene" unique_id=1924049284]
 layout_mode = 2
 
 [node name="Graph Node Ui" type="VBoxContainer" parent="Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel" unique_id=269342877 node_paths=PackedStringArray("load_node", "node_list")]
@@ -109,11 +139,11 @@ text = "Copy Select Node"
 layout_mode = 2
 text = "Del Select Node"
 
-[node name="Editor Layer Manager" type="VBoxContainer" parent="Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel" unique_id=335517613 node_paths=PackedStringArray("gener_rule_editor", "load_graph_node", "save_node", "ui_manager", "type_item", "id_item", "item_name")]
+[node name="Editor Layer Manager" type="VBoxContainer" parent="Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel" unique_id=335517613 node_paths=PackedStringArray("load_graph_node", "save_node", "ui_manager", "type_item", "id_item", "item_name")]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 10
 script = ExtResource("12_t6pu0")
-gener_rule_editor = NodePath("../../../../../..")
 load_graph_node = NodePath("../../../../../../Load Graph")
 save_node = NodePath("../../../../../../Save Graph")
 ui_manager = NodePath("../../../../../../Ui Manager")
@@ -194,7 +224,7 @@ text = "Settings"
 [node name="MainGraphEdit" type="GraphEdit" parent="Panel/BaseEditorContainer" unique_id=1291819869 node_paths=PackedStringArray("del_but", "copy_but", "load_graph")]
 layout_mode = 2
 size_flags_vertical = 3
-scroll_offset = Vector2(0, -47)
+scroll_offset = Vector2(0, -91)
 minimap_enabled = false
 show_menu = false
 script = ExtResource("13_tey8d")
@@ -272,14 +302,13 @@ text = "Save"
 [node name="HSeparator2" type="HSeparator" parent="SettingPanel/MarginContainer/VBoxContainer" unique_id=713787412]
 layout_mode = 2
 
-[node name="Path Manager" type="VBoxContainer" parent="SettingPanel/MarginContainer/VBoxContainer" unique_id=1339428865 node_paths=PackedStringArray("file_save_load", "path_baker", "bake_but", "gener_rule_editor", "type_data", "add_data_path_but", "path_cont")]
+[node name="Path Manager" type="VBoxContainer" parent="SettingPanel/MarginContainer/VBoxContainer" unique_id=1339428865 node_paths=PackedStringArray("file_save_load", "path_baker", "bake_but", "type_data", "add_data_path_but", "path_cont")]
 layout_mode = 2
 script = ExtResource("16_28lud")
 path_scene = ExtResource("17_m4bvh")
 file_save_load = NodePath("../File Save Load")
 path_baker = NodePath("PathBaker")
 bake_but = NodePath("Up Menu/bake")
-gener_rule_editor = NodePath("../../../..")
 type_data = NodePath("Up Menu/Type Data")
 add_data_path_but = NodePath("Up Menu/Add Data Path")
 path_cont = NodePath("Path Cont")
@@ -309,16 +338,30 @@ layout_mode = 2
 [node name="PathBaker" type="Node" parent="SettingPanel/MarginContainer/VBoxContainer/Path Manager" unique_id=1552033074]
 script = ExtResource("18_t6pu0")
 
-[node name="LayerManager" type="Node" parent="." unique_id=1366090209 node_paths=PackedStringArray("main_editor", "layer_lab", "layer_option")]
+[node name="LayerManager" type="Node" parent="." unique_id=1472008421 node_paths=PackedStringArray("main_editor", "scene_manager", "layer_lab", "layer_option")]
 script = ExtResource("19_0w74o")
 main_editor = NodePath("..")
-layer_lab = NodePath("../Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/Layer/Label")
+scene_manager = NodePath("../SceneManager")
+layer_lab = NodePath("../Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/Layer/LayerLabel")
 layer_option = NodePath("../Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/Layer/LayerOption")
+metadata/_custom_type_script = "uid://21jxmcwtjhm1"
 
-[node name="Load Graph" type="Node" parent="." unique_id=227454827 node_paths=PackedStringArray("graph_edit", "main_graph_editor")]
+[node name="SceneManager" type="Node" parent="." unique_id=1061025425 node_paths=PackedStringArray("main_editor", "scene_lab", "scene_option", "scene_add_but", "scene_del_but")]
+script = ExtResource("15_4ecpn")
+main_editor = NodePath("..")
+scene_lab = NodePath("../Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/Scene/SceneLabel")
+scene_option = NodePath("../Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/Scene/SceneOption")
+scene_add_but = NodePath("../Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/Scene/AddBut")
+scene_del_but = NodePath("../Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/Scene/DelBut")
+metadata/_custom_type_script = "uid://8nkity7ndbby"
+
+[node name="Controller" type="Node" parent="." unique_id=1196004355 node_paths=PackedStringArray("main_editor")]
+script = ExtResource("16_v853t")
+main_editor = NodePath("..")
+
+[node name="Load Graph" type="Node" parent="." unique_id=227454827 node_paths=PackedStringArray("graph_edit")]
 script = ExtResource("19_mfmn2")
 graph_edit = NodePath("../Panel/BaseEditorContainer/MainGraphEdit")
-main_graph_editor = NodePath("..")
 
 [node name="Save Graph" type="Node" parent="." unique_id=1819617441 node_paths=PackedStringArray("graph_edit")]
 script = ExtResource("20_q2y4y")

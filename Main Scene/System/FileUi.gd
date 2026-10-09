@@ -1,6 +1,6 @@
 extends MenuButton
 
-@export var main_editor : Node
+@export var main_editor : MainEditor
 
 var item_ar : Array[Callable]
 
