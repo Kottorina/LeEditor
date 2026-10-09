@@ -1,0 +1,88 @@
+extends BakerMain
+class_name BakerGraphDataObject
+
+var graph_const := GraphNodeConstants.new()
+
+var free_nodes : Array[BigGraphNodeMakeInsts] ## ЕЩЕ НЕ ОБРАБОТАННЫЕ НОДЫ
+
+var central_data_graph : Dictionary
+var save_graph : Dictionary
+var full_graph : Dictionary
+
+var rnd : RandomNumberGenerator
+
+## ВРЕМЕННО, ПОКА ВВИДЕ ОБРАЗЦА
+var connection_plugs_instr : BigGraphNodeMakeInsts
+
+func bake_data(graph_data_objects : GraphDataObjects, c_seed : int = 0) -> GraphDataObjects:
+	
+	central_data_graph = graph_data_objects.central_data_graph.duplicate(true)
+	save_graph = graph_data_objects.save_graph.duplicate(true)
+	full_graph = graph_data_objects.full_graph.duplicate(true)
+	
+	rnd = RandomNumberGenerator.new()
+	rnd.seed = c_seed
+	
+	free_nodes.append(graph_data_objects.start_bake_node)
+	
+	## ПРЕДВАРИТЕЛЬНАЯ ОБРАБОТКА, НАДО, ПРОСТО НАДО
+	for node_instr : BigGraphNodeMakeInsts in save_graph: 
+		match node_instr.type_node:
+			4:
+				connection_plugs_instr = node_instr 
+	
+	var callable = Callable(self, "bake_node")
+	if not callable.is_valid():
+		return
+	
+	while ! free_nodes.is_empty():
+		
+		var last_ind = free_nodes.size()-1
+		callable.call(free_nodes[last_ind])
+		free_nodes.remove_at(last_ind)
+	
+	var get_full_bake_data = Callable(self, "GetFullBakeData")
+	if callable.is_valid():
+		graph_data_objects.bake_data_ar = get_full_bake_data.call()
+	
+	return graph_data_objects
+
+## ДОБАВЛЯЕТ НОДЫ ДЛЯ ПОСЛЕДУЮЩЕЙ ОБРАБОТКИ, СУКА
+func AddFreePort(from_to_with : FromToWith) -> void:
+	free_nodes.append(from_to_with.to_obj)
+
+func get_free_ports(rom_to_with_ar : Array[FromToWith]) -> Array[FromToWith]:
+	var free_ports_ar : Array[FromToWith]
+		
+	for port in rom_to_with_ar:
+		if IsPortFree(port) == true:
+			free_ports_ar.append(port)
+		
+	return free_ports_ar
+	
+func IsPortFree(from_to_with : FromToWith) -> bool:
+	if from_to_with.to_obj is String:
+		return false
+	return true
+
+func GetLastStep(obj_to_step : Dictionary, node : BigGraphNodeMakeInsts, title_instr : String = "") -> DataStep:
+	var last_step : DataStep = null
+	var ports = full_graph[node][graph_const.LEFT_PORTS_DATA_NAME] + full_graph[node][graph_const.RIGHT_PORTS_DATA_NAME]
+	for port : FromToWith in ports:
+		if obj_to_step.has(port.to_obj):
+			if title_instr == "":
+				last_step = obj_to_step[port.to_obj]
+				break
+			else:
+				if port.to_data.instr.title_instr == title_instr:
+					last_step = obj_to_step[port.to_obj]
+					break
+	
+	return last_step
+
+func GetDataFromCentralData(node : BigGraphNodeMakeInsts,data_key : String) -> Variant:
+	var data_meta_ar : Array[GraphNodeMetadata] = central_data_graph[node]
+	for data in data_meta_ar:
+		if data.instr.title_instr == data_key:
+			return data.instr.body_value
+	return null
