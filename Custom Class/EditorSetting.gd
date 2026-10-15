@@ -7,5 +7,7 @@ class_name EditorSetting
 
 @export var path_to_editor_data : String
 @export var curent_layer : int
+@export var curent_scene : int
 
 const Layer : String = "curent_layer"
+const Scene : String = "curent_scene"

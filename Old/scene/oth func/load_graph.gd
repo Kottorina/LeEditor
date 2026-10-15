@@ -5,10 +5,10 @@ extends Node
 
 const BODY_NODE = GraphNodeMakeInsts.BodyNode
 
-func LoadUiSet( scene_graph_ui : SceneGraphUi ) -> void:
-	if scene_graph_ui != null:
-		graph_edit.zoom = scene_graph_ui.zoom
-		graph_edit.scroll_offset = scene_graph_ui.scroll_offset
+#func LoadUiSet( scene_graph_ui : SceneGraphUi ) -> void:
+	#if scene_graph_ui != null:
+		#graph_edit.zoom = scene_graph_ui.zoom
+		#graph_edit.scroll_offset = scene_graph_ui.scroll_offset
 
 func MakeNodeFromBigInstr(big_instr : BigGraphNodeMakeInsts) -> GraphNode:
 	

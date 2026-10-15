@@ -12,7 +12,7 @@ class_name GraphDataObjects
 
 @export var bake_data_ar : Array[DataContainer] ## СОДЕРЖИТ ВСЕ ЗАПЕЧЕННЫЕ ДАННЫЕ, УНИВЕРСАЛЬНЫЙ ВИД
 
-@export var ui : SceneGraphUi
+#@export var ui : SceneGraphUi
 
 ## УСТАРЕЛО, ПРОСТО В ВИДЕ ПРИМЕРА
 #@export var rooms_graph : Dictionary ## Отдельно Граф С Комнатами и коннекторами между --- { Room : [ ConnectorToConnector ] }

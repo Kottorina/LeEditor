@@ -5,7 +5,9 @@ var editor_data : LeFileSystem
 @export var editor_setting : EditorSetting ## ДЛЯ СОХРАНЕНИЯ СОСТОЯНИЯ РЕДАКТОРА
 
 @export var editor_layer_dir_path : String = "res://addons/LeEditor/Objects/Layers/Editor"
+@export var ui_instr_graph_node_dir_path : String = "res://addons/LeEditor/Objects/Ui Instr/"
 @export var link_layer_dir_path : String = "res://addons/LeEditor/Objects/Layers/Link"
+
 
 @export_group("System")
 @export var system_ar : Array[Node]
@@ -14,6 +16,9 @@ var editor_data : LeFileSystem
 @export var FileNameLab : Label
 
 func _ready() -> void:
+	
+	## ВРЕМЯ НА ПОДГОТОВКУ ДЛЯ GraphEdit, без нее выдает некоретные результаты
+	await get_tree().process_frame
 	
 	if ! editor_setting or ! FileNameLab:
 		push_error("LOAD editor_setting ERROR")
@@ -45,6 +50,11 @@ func GetArrayFromScriptAndDir( path : String, find_script : Script ) -> Array:
 func GetArEditorlayers() -> Array:
 	var ar = GetArrayFromScriptAndDir( editor_layer_dir_path, EditorObjectLayer )
 	return ar
+
+func GetArUiInstr() -> Array:
+	var ar = GetArrayFromScriptAndDir( ui_instr_graph_node_dir_path, UiInstrGraphNode )
+	return ar
+
 
 func LoadEditorData( path : String ) -> void:
 	var load_node : Variant
