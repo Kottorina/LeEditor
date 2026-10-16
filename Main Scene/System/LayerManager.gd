@@ -6,11 +6,13 @@ class_name LayerManager
 @export_group("System")
 @export var scene_manager : SceneManager
 
+@export var layer_ui_manager : LayerUiNodeManager
+
 @export_group("Ui")
 @export var layer_lab : Label
 @export var layer_option : OptionButton
 
-var item_ar : Array[EditorObjectLayer]
+var item_ar : Array[EditorLayer]
 
 func StartBake() -> void:
 	if ! main_editor or ! layer_lab or ! layer_option:
@@ -23,7 +25,7 @@ func StartBake() -> void:
 	layer_option.clear()
 	
 	var layer_ar : Array = main_editor.GetArEditorlayers()
-	for layer : EditorObjectLayer in layer_ar:
+	for layer : EditorLayer in layer_ar:
 		layer_option.add_item(layer.data_key,item_ar.size())
 		item_ar.append(layer)
 	
@@ -58,4 +60,8 @@ func ItemSelected(id : int) -> void:
 	main_editor.SaveCurrentEditorData() ## Что бы не терять данные при переключение слоев
 	
 	main_editor.SetSettingValue(EditorSetting.Layer, id)
-	scene_manager.LoadLayer( item_ar[id] )
+	
+	var layer : EditorLayer = item_ar[id]
+	
+	scene_manager.LoadLayer( layer )
+	layer_ui_manager.LoadLayerUI( layer )

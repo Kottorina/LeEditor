@@ -19,7 +19,10 @@ func SetSceneUi( scene_ui : SceneUi ) -> void:
 	print(scroll_offset)
 
 var main_free_popup : PopupMenu
+
+var add_node_id_to_node_dict : Dictionary
 var add_node_popup : PopupMenu
+
 func StartBake() -> void:
 	main_free_popup = PopupMenu.new()
 	add_node_popup = PopupMenu.new()
@@ -27,15 +30,22 @@ func StartBake() -> void:
 	main_free_popup.add_submenu_node_item(UiEditorConst.AddNode,add_node_popup)
 	
 	add_child(main_free_popup)
+	
 	#Здесь подключения что бы снимать данные и тд
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
-		print("D")
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 			main_free_popup.position = Vector2i(get_global_mouse_position())
 			main_free_popup.popup()
 			accept_event()
+
+func ClearAddNodePopup() -> void:
+	if add_node_popup:
+		add_node_popup.clear()
+		add_node_id_to_node_dict.clear()
+		return
+	push_error("add_node_popup Is Null")
 
 
 #@export var del_but : Button

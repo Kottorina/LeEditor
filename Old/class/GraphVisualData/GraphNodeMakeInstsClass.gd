@@ -1,7 +1,7 @@
 extends Resource
 class_name GraphNodeMakeInsts
 
-@export var title_instr : String = ""
+
 
 @export var is_left : bool = false
 @export var left_type : int = 0
@@ -11,7 +11,7 @@ class_name GraphNodeMakeInsts
 @export var right_type : int = 0
 @export var right_color : Color = Color.BLACK
 
-enum BodyNode {Label_,SpinBox_,TextEdit_,CheckBox_}
+
 @export var body_node : BodyNode = BodyNode.Label_
 @export var body_value : Variant ## int, float, str и тд, все схавает
 

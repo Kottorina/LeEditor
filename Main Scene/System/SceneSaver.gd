@@ -5,7 +5,8 @@ class_name SceneSaver
 
 @export var graph_manager : GraphManager
 
-func UpdateScene( scene : LeSceneFile ) -> LeSceneFile:
+func GetActualScene() -> LeSceneFile:
+	var scene := LeSceneFile.new() 
 	
 	scene.ui_scene = graph_manager.GetSceneUi()
 	

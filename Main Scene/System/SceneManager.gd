@@ -18,7 +18,6 @@ class_name SceneManager
 
 @export var scene_loader : SceneLoader
 @export var scene_saver : SceneSaver
-@export var scene_ui_manager : SceneUiNodeManager
 
 func StartBake() -> void:
 	if ! scene_option or ! scene_lab or ! scene_add_but or ! scene_del_but or ! rename_but or ! rename_text_edit:
@@ -41,7 +40,7 @@ func StartBake() -> void:
 	if !rename_but.pressed.is_connected(RenameSelectedScene):
 		rename_but.pressed.connect(RenameSelectedScene)
 
-func LoadLayer( layer : EditorObjectLayer, ind : int = -1 ) -> void:
+func LoadLayer( layer : EditorLayer, ind : int = -1 ) -> void:
 	
 	scene_option.clear()
 	local_file_system = LeFileSystem.new()
@@ -71,7 +70,8 @@ func LoadLayer( layer : EditorObjectLayer, ind : int = -1 ) -> void:
 	
 	scene_option.select(last_ind)
 	LoadSceneFromInd(last_ind)
-	scene_option.show_popup()
+	
+	#scene_option.show_popup() #Проблема В Порядке Инициализации
 
 var local_file_system : LeFileSystem
 var LocalDataKey : String
@@ -99,15 +99,28 @@ func GetSaveContainer() -> SaveContainer:
 		push_error("Scene Saver Is Empty")
 		return
 	
+	var actual_scene : LeSceneFile = scene_saver.GetActualScene()
+	
+	var select_id = scene_option.get_selected_id()
+	
+	var from_file_scene = local_file_system.GetObjectFromId(LocalDataKey,select_id)
+	if from_file_scene is int:
+		match from_file_scene:
+			LeFileSystem.ERROR:
+				push_error("save_scene File System ERROR")
+			LeFileSystem.ObjectIdNotFind:
+				push_error("save_scene Is ObjectIdNotFind")
+		push_error("save_scene ERROR")
+	
+	elif from_file_scene is LeSceneFile: 
+		actual_scene.id_ = from_file_scene.id_
+		actual_scene.scene_name = from_file_scene.scene_name
+	
 	var save_container := SaveContainer.new()
 	save_container.data_key = LocalDataKey
 	
-	var select_id = scene_option.get_selected_id()
-	var current_scene : LeSceneFile = local_file_system.GetObjectFromId(LocalDataKey,select_id)
-	
-	var new_scene : LeSceneFile = scene_saver.UpdateScene(current_scene)
-	if new_scene:
-		local_file_system.AddObjInArray(LocalDataKey,new_scene,new_scene.id_,true)
+	if actual_scene:
+		local_file_system.AddObjInArray(LocalDataKey,actual_scene,actual_scene.id_,true)
 	
 	save_container.le_file_ar = local_file_system.GetArFromKey(LocalDataKey)
 	return save_container
@@ -163,7 +176,6 @@ func LoadSceneFromInd(ind : int) -> void:
 		push_error("ItemSelected: scene_file Is ObjectIdNotFind Or ERROR")
 	elif scene_file is LeSceneFile:
 		scene_loader.LoadScene(scene_file)
-		scene_ui_manager.MakeUiNodeForScene(scene_file)
 		
 		main_editor.SetSettingValue(EditorSetting.Scene, ind)
 	else:

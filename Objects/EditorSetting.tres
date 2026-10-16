@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="EditorSetting" format=3 uid="uid://bj4y4c4ed7qc2"]
+[gd_resource type="Resource" script_class="EditorSetting" format=3 uid="uid://b6q0p0ufs7dmp"]
 
 [ext_resource type="Script" uid="uid://d4nkvqoglldsg" path="res://addons/LeEditor/Custom Class/EditorSetting.gd" id="1_nitep"]
 
 [resource]
 script = ExtResource("1_nitep")
 path_to_editor_data = "C:/dew/game_project/_Godo (Git, Not Update)/library_expedition/Test Resource/Test-1.tres"
+curent_scene = 1
 metadata/_custom_type_script = "uid://d4nkvqoglldsg"

@@ -5,7 +5,7 @@ var editor_data : LeFileSystem
 @export var editor_setting : EditorSetting ## ДЛЯ СОХРАНЕНИЯ СОСТОЯНИЯ РЕДАКТОРА
 
 @export var editor_layer_dir_path : String = "res://addons/LeEditor/Objects/Layers/Editor"
-@export var ui_instr_graph_node_dir_path : String = "res://addons/LeEditor/Objects/Ui Instr/"
+@export var graph_node_main_instr_path : String = "res://addons/LeEditor/Objects/Ui Instr/"
 @export var link_layer_dir_path : String = "res://addons/LeEditor/Objects/Layers/Link"
 
 
@@ -44,15 +44,16 @@ func GetArrayFromScriptAndDir( path : String, find_script : Script ) -> Array:
 		var full_path = path.path_join(file_name)
 		var file = load(full_path)
 		if file.get_script() == find_script:
+			file.resource_name = file_name.trim_suffix(".tres")
 			return_ar.append(file)
 	return return_ar
 
 func GetArEditorlayers() -> Array:
-	var ar = GetArrayFromScriptAndDir( editor_layer_dir_path, EditorObjectLayer )
+	var ar = GetArrayFromScriptAndDir( editor_layer_dir_path, EditorLayer )
 	return ar
 
-func GetArUiInstr() -> Array:
-	var ar = GetArrayFromScriptAndDir( ui_instr_graph_node_dir_path, UiInstrGraphNode )
+func GetArGraphNodeInstrUiInstr() -> Array:
+	var ar = GetArrayFromScriptAndDir( graph_node_main_instr_path, GraphNodeMainInstr )
 	return ar
 
 

@@ -1,5 +1,5 @@
 extends Resource
-class_name EditorObjectLayer
+class_name EditorLayer
 
 @export var data_key : String
 
