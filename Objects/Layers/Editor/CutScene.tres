@@ -1,7 +1,6 @@
-[gd_resource type="Resource" script_class="EditorObjectLayer" format=3 uid="uid://byfp00jjdhkav"]
+[gd_resource type="Resource" script_class="EditorLayer" format=3 uid="uid://byfp00jjdhkav"]
 
 [ext_resource type="Script" uid="uid://dyh1823n402rk" path="res://addons/LeEditor/Custom Class/EditorObjectLayer.gd" id="1_tauan"]
-[ext_resource type="Script" uid="uid://6qsr68btodnl" path="res://addons/LeEditor/Old/class/Path/PathNode.gd" id="2_qyaln"]
 
 [resource]
 script = ExtResource("1_tauan")

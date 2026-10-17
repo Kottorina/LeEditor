@@ -5,7 +5,7 @@ var editor_data : LeFileSystem
 @export var editor_setting : EditorSetting ## ДЛЯ СОХРАНЕНИЯ СОСТОЯНИЯ РЕДАКТОРА
 
 @export var editor_layer_dir_path : String = "res://addons/LeEditor/Objects/Layers/Editor"
-@export var graph_node_main_instr_path : String = "res://addons/LeEditor/Objects/Ui Instr/"
+@export var graph_node_main_instr_path : String = "res://addons/LeEditor/Objects/Ui Node Instr/"
 @export var link_layer_dir_path : String = "res://addons/LeEditor/Objects/Layers/Link"
 
 

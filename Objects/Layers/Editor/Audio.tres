@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="EditorObjectLayer" format=3 uid="uid://cnr7avk0ii8wd"]
+[gd_resource type="Resource" script_class="EditorLayer" format=3 uid="uid://cnr7avk0ii8wd"]
 
 [ext_resource type="Script" uid="uid://dyh1823n402rk" path="res://addons/LeEditor/Custom Class/EditorObjectLayer.gd" id="1_n8swu"]
-[ext_resource type="Script" uid="uid://6qsr68btodnl" path="res://addons/LeEditor/Old/class/Path/PathNode.gd" id="2_0l5wx"]
 
 [resource]
 script = ExtResource("1_n8swu")
 data_key = "Audio"
+StartBakeEmpty = true
 metadata/_custom_type_script = "uid://dyh1823n402rk"

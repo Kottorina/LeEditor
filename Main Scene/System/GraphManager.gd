@@ -12,11 +12,9 @@ func GetSceneUi() -> SceneUi:
 func SetSceneUi( scene_ui : SceneUi ) -> void:
 	if scene_ui:
 		zoom = scene_ui.zoom
-		print(scene_ui.scroll_offset)
 		scroll_offset = scene_ui.scroll_offset
 	else:
 		push_warning("scene_ui Is Empty")
-	print(scroll_offset)
 
 var main_free_popup : PopupMenu
 

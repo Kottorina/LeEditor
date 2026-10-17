@@ -4,18 +4,37 @@ class_name EditorLayer
 @export var data_key : String
 
 @export var baker_script : BakerMain ## Для Запекания
-#
-### ФЛАГИ ДЛЯ UI, ПРИ ЗАГРУЗКЕ
-#@export_group("Ui")
-#
-#@export_subgroup("Base Tool")
-#@export var ui_start_gener_node : bool = true
-#@export var ui_start_gener_empty_node : bool = false
+
+@export var random_bool : bool
+
+## ФЛАГИ ДЛЯ UI, ПРИ ЗАГРУЗКЕ
+# ПРЕФИКС "UI_" ОБЯЗАТЕЛЕН
+@export_group("Ui")
+
+@export_subgroup("Tool")
+
+@export var Ui_StartBake : bool = true
+@export var Ui_StartBakeEmpty : bool = false
+
+
+const SettingNameProperty = "name"
+const UiPrefix = "Ui_"
+
+func GetUiSettingNameAr() -> Array[String]:
+	var ui_property_name_ar: Array[String] = []
+	for property  in get_property_list():
+		var name : String = property[SettingNameProperty]
+		if name.begins_with(UiPrefix):
+			name.trim_prefix(UiPrefix)
+			ui_property_name_ar.append(name)
+	
+	return ui_property_name_ar
+
 #@export var ui_all_rnd_fork : bool = false
-##@export var ui_custom_big_instr : bool = false ## А ОНО НАМ ВООБЩЕ БЛЯДЬ НАДО В ЭТОМ ВИДЕ?
+#@export var ui_custom_big_instr : bool = false ## А ОНО НАМ ВООБЩЕ БЛЯДЬ НАДО В ЭТОМ ВИДЕ?
 #@export var ui_connectors_plugs : bool = false
 #@export var ui_enter_node : bool = false
-### ПОКА ВОПРОС ПО НЕОБХОДИМОСТИ И ОФОРМЛЕНИЮ
+## ПОКА ВОПРОС ПО НЕОБХОДИМОСТИ И ОФОРМЛЕНИЮ
 #@export var ui_rooms_nodes : bool = false
 ### МОЖЕТ ВЫЗВАТЬ ОБЬЕКТЫ ИЗ EDITORLAYER В ВИДЕ UI
 #@export var ui_editor_layer_nodes : String = ""

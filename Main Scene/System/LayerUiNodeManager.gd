@@ -5,6 +5,8 @@ class_name LayerUiNodeManager
 @export var main_editor : MainEditor
 @export var graph_manager : GraphManager
 
+var graph_node_main_inst_dict : Dictionary
+
 ## ПОДГРУЖАЕТ ТАБЛИЦУ С ДИСКА, БАЗОВОЕ И ОПРЕДЕЛЕННОЕ
 func StartBake() -> void:
 	
@@ -12,7 +14,11 @@ func StartBake() -> void:
 		push_error("main_editor Is Null")
 		return
 	
-	var graph_node_main_instr GetArGraphNodeInstrUiInstr
+	graph_node_main_inst_dict.clear()
+	
+	var graph_node_main_inst_ar : Array = main_editor.GetArGraphNodeInstrUiInstr()
+	for instr : GraphNodeMainInstr in graph_node_main_inst_ar:
+		graph_node_main_inst_dict[instr.resource_name] = instr
 
 ## СОЗДАЕТ И ЗАГРУЖАЕТ ФИНАЛЬНыЙ СПИСОК И ПОДГРУЖАЕТ ДАННЫЕ ИСХОДЯ ИЗ НАСТРОЕК СЦЕНЫ 
 ## И УЖЕ ОТДАЕТ В РЕДАКТОР
@@ -25,3 +31,4 @@ func LoadLayerUI( layer : EditorLayer ) -> void:
 	
 	graph_manager.ClearAddNodePopup()
 	
+	var propety_ar : Array[String] = layer.GetUiSettingNameAr()

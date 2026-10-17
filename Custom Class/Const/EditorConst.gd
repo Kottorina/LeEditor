@@ -5,6 +5,7 @@ const StartBake : String = "StartBake"
 const GetSaveContainer : String = "GetSaveContainer"
 
 enum DataKey {
+Nothing,
 FirstData,
 SecondData,
 ThirdData,
@@ -34,6 +35,11 @@ const ConnectorColor : Dictionary = {
 ConnectorType.Tool : Color.WHITE,
 ConnectorType.Audio : Color.AQUA,
 ConnectorType.Dialogue : Color.RED,
+}
+const ConnectorValue : Dictionary = {
+ConnectorType.Tool : 1,
+ConnectorType.Audio : 2,
+ConnectorType.Dialogue : 3,
 }
 
 enum BodyNode {

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cv7jwmmq5cb4p"]
 
 [ext_resource type="Script" uid="uid://ct3vea5bq5x5v" path="res://addons/LeEditor/Main Scene/MainEditor.gd" id="1_t6pu0"]
-[ext_resource type="Resource" uid="uid://b6q0p0ufs7dmp" path="res://addons/LeEditor/Objects/EditorSetting.tres" id="2_bqliu"]
+[ext_resource type="Resource" path="res://addons/LeEditor/Objects/EditorSetting.tres" id="2_bqliu"]
 [ext_resource type="Theme" uid="uid://bwsyptdvotogc" path="res://addons/LeEditor/Objects/EditorTheme.tres" id="2_cw4tc"]
 [ext_resource type="Script" uid="uid://b17u2anbshfxq" path="res://addons/LeEditor/Main Scene/System/FileUi.gd" id="3_bs28w"]
 [ext_resource type="Theme" uid="uid://dglg5w03t8tsc" path="res://addons/LeEditor/Objects/EditorSmallTheme.tres" id="3_ulvws"]
@@ -39,7 +39,7 @@ PanelContainer/styles/panel = SubResource("StyleBoxFlat_dltes")
 [node name="MainEditor" type="Node" unique_id=169194402 node_paths=PackedStringArray("system_ar", "FileNameLab")]
 script = ExtResource("1_t6pu0")
 editor_setting = ExtResource("2_bqliu")
-system_ar = [NodePath("Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/FileUi"), NodePath("LayerManager"), NodePath("SceneManager"), NodePath("Panel/BaseEditorContainer/GraphManager")]
+system_ar = [NodePath("Panel/BaseEditorContainer/GraphManager"), NodePath("Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/FileUi"), NodePath("LayerManager"), NodePath("SceneManager"), NodePath("LayerManager/LayerUiNodeManager")]
 FileNameLab = NodePath("Panel/BaseEditorContainer/UpPanel/VBoxContainer/FileName")
 metadata/_custom_type_script = "uid://ct3vea5bq5x5v"
 
@@ -225,7 +225,6 @@ script = ExtResource("13_tey8d")
 metadata/_custom_type_script = "uid://dccq0y6xy1ay3"
 
 [node name="SettingPanel" type="PanelContainer" parent="." unique_id=116755840 node_paths=PackedStringArray("close_open_but_ar")]
-visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5

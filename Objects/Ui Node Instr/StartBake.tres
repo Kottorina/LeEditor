@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="GraphNodeMainInstr" format=3 uid="uid://dag5uti8lx77m"]
+
+[ext_resource type="Script" uid="uid://d00teglne7h5j" path="res://addons/LeEditor/Custom Class/GraphNode/GraphNodeLayerInstr.gd" id="1_3kq8y"]
+[ext_resource type="Script" uid="uid://c326de6spyr3y" path="res://addons/LeEditor/Custom Class/GraphNode/GraphNodeMainInstr.gd" id="2_3d0vx"]
+
+[sub_resource type="Resource" id="Resource_l3kts"]
+script = ExtResource("1_3kq8y")
+is_left = true
+is_right = true
+metadata/_custom_type_script = "uid://d00teglne7h5j"
+
+[sub_resource type="Resource" id="Resource_rl4tq"]
+script = ExtResource("1_3kq8y")
+title = 1
+is_left = true
+left_connector_type = 2
+is_right = true
+right_connector_type = 2
+metadata/_custom_type_script = "uid://d00teglne7h5j"
+
+[sub_resource type="Resource" id="Resource_00wy2"]
+script = ExtResource("1_3kq8y")
+title = 2
+is_left = true
+left_connector_type = 1
+is_right = true
+right_connector_type = 1
+metadata/_custom_type_script = "uid://d00teglne7h5j"
+
+[resource]
+script = ExtResource("2_3d0vx")
+type = 7
+layer_instr_ar = Array[ExtResource("1_3kq8y")]([SubResource("Resource_l3kts"), SubResource("Resource_rl4tq"), SubResource("Resource_00wy2")])
+metadata/_custom_type_script = "uid://c326de6spyr3y"

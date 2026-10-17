@@ -45,7 +45,8 @@ func StartBake() -> void:
 	var current_ind_scene : int = main_editor.GetSettingValue(EditorSetting.Scene)
 	
 	layer_option.select(current_id)
-	scene_manager.LoadLayer( item_ar[current_id], current_ind_scene)
+	
+	StartLoadLayer( item_ar[current_id], current_ind_scene )
 
 func ItemSelected(id : int) -> void:
 	
@@ -61,7 +62,10 @@ func ItemSelected(id : int) -> void:
 	
 	main_editor.SetSettingValue(EditorSetting.Layer, id)
 	
-	var layer : EditorLayer = item_ar[id]
+	StartLoadLayer(item_ar[id])
 	
-	scene_manager.LoadLayer( layer )
+
+func StartLoadLayer( layer : EditorLayer, scene_ind : int = -1) -> void:
 	layer_ui_manager.LoadLayerUI( layer )
+	scene_manager.LoadLayer( layer )
+	
