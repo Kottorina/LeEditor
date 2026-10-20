@@ -6,7 +6,7 @@ class_name LayerManager
 @export_group("System")
 @export var scene_manager : SceneManager
 
-@export var layer_ui_manager : LayerUiNodeManager
+@export var ui_manager : UiNodeManager
 
 @export_group("Ui")
 @export var layer_lab : Label
@@ -49,11 +49,6 @@ func StartBake() -> void:
 	StartLoadLayer( item_ar[current_id], current_ind_scene )
 
 func ItemSelected(id : int) -> void:
-	
-	if ! main_editor or ! scene_manager:
-		push_error("ItemSelected ERROR")
-		return
-	
 	if item_ar.size() < id:
 		push_error("Id In LayerManager Is Too Big")
 		return
@@ -66,6 +61,10 @@ func ItemSelected(id : int) -> void:
 	
 
 func StartLoadLayer( layer : EditorLayer, scene_ind : int = -1) -> void:
-	layer_ui_manager.LoadLayerUI( layer )
-	scene_manager.LoadLayer( layer )
+	if ! ui_manager or ! scene_manager:
+		push_error("ItemSelected ERROR")
+		return
+	
+	ui_manager.LoadLayerUI( layer )
+	scene_manager.LoadLayer( layer, scene_ind )
 	

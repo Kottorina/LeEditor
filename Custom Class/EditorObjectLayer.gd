@@ -15,19 +15,18 @@ class_name EditorLayer
 
 @export var Ui_StartBake : bool = true
 @export var Ui_StartBakeEmpty : bool = false
-
+@export var Ui_StartDialogue : bool = false
 
 const SettingNameProperty = "name"
 const UiPrefix = "Ui_"
 
-func GetUiSettingNameAr() -> Array[String]:
+func GetActiveUiNodeNameAr() -> Array[String]:
 	var ui_property_name_ar: Array[String] = []
 	for property  in get_property_list():
 		var name : String = property[SettingNameProperty]
 		if name.begins_with(UiPrefix):
-			name.trim_prefix(UiPrefix)
-			ui_property_name_ar.append(name)
-	
+			if get(name) == true:
+				ui_property_name_ar.append(name.trim_prefix(UiPrefix))
 	return ui_property_name_ar
 
 #@export var ui_all_rnd_fork : bool = false

@@ -1,14 +1,14 @@
 extends Node
-
-#@export var graph_edit: GraphEdit 
-#@export var main_graph_editor : Node
 #
-#const BODY_NODE = GraphNodeMakeInsts.BodyNode
-#
-##func LoadUiSet( scene_graph_ui : SceneGraphUi ) -> void:
-	##if scene_graph_ui != null:
-		##graph_edit.zoom = scene_graph_ui.zoom
-		##graph_edit.scroll_offset = scene_graph_ui.scroll_offset
+##@export var graph_edit: GraphEdit 
+##@export var main_graph_editor : Node
+##
+##const BODY_NODE = GraphNodeMakeInsts.BodyNode
+##
+###func LoadUiSet( scene_graph_ui : SceneGraphUi ) -> void:
+	###if scene_graph_ui != null:
+		###graph_edit.zoom = scene_graph_ui.zoom
+		###graph_edit.scroll_offset = scene_graph_ui.scroll_offset
 #
 #func MakeNodeFromBigInstr(big_instr : BigGraphNodeMakeInsts) -> GraphNode:
 	#
@@ -47,7 +47,7 @@ extends Node
 				#
 				#child_node.text = inst.title_instr
 				#new_node.add_child(child_node)
-			#
+			##
 			#BODY_NODE.SpinBox_:
 				#active_node = SpinBox.new()
 				#active_node.step = GraphNodeConstants.SPINBOX_BASE_STEP
@@ -94,7 +94,7 @@ extends Node
 				#child_node.add_child(active_node)
 				#if inst.body_value != null:
 					#active_node.button_pressed = inst.body_value
-			#
+			
 		#new_node.set_slot(ind,inst.is_left,inst.left_type,inst.left_color,inst.is_right,inst.right_type,inst.right_color)
 		#
 		#var metadata = GraphNodeMetadata.new()
@@ -126,39 +126,39 @@ extends Node
 	#graph_edit.add_child(new_node)
 	#return new_node
 #
-### ЗАГРУЗКА SAVEGRAPH, гав гав
-#func LoadSaveGraph(save_graph : Dictionary) -> void:
-	#
-	#graph_edit.ClearGraphScene()
-	#if save_graph.is_empty():
-		#return
-	#
-	### ЗАГРУЗКА НОДОВ
-	#
-	#var big_instr_to_node : Dictionary
-	#
-	#for big_instr in save_graph.keys():
-		#var new_node = MakeNodeFromBigInstr(big_instr)
-		#big_instr_to_node[big_instr] = new_node
-		#
-	#for big_instr in save_graph.keys():
-		### ЗАГРУЗКА СОЕДИНЕНИЙ
-		#for left_port : FromToWith in save_graph[big_instr][GraphNodeConstants.LEFT_PORTS_DATA_NAME]:
-			#
-			#if left_port.to_obj is String:
-				#continue
-			#
-			#graph_edit.connect_node(
-				#big_instr_to_node[left_port.to_obj].name, left_port.to_data.port_num,
-				#big_instr_to_node[big_instr].name,left_port.from_data.port_num
-				#)
-			#
-		#for right_port : FromToWith in save_graph[big_instr][GraphNodeConstants.RIGHT_PORTS_DATA_NAME]:
-			#
-			#if right_port.to_obj is String:
-				#continue
-			#
-			#graph_edit.connect_node(
-				#big_instr_to_node[big_instr].name,right_port.from_data.port_num,
-				#big_instr_to_node[right_port.to_obj].name, right_port.to_data.port_num
-				#)
+#### ЗАГРУЗКА SAVEGRAPH, гав гав
+##func LoadSaveGraph(save_graph : Dictionary) -> void:
+	##
+	##graph_edit.ClearGraphScene()
+	##if save_graph.is_empty():
+		##return
+	##
+	#### ЗАГРУЗКА НОДОВ
+	##
+	##var big_instr_to_node : Dictionary
+	##
+	##for big_instr in save_graph.keys():
+		##var new_node = MakeNodeFromBigInstr(big_instr)
+		##big_instr_to_node[big_instr] = new_node
+		##
+	##for big_instr in save_graph.keys():
+		#### ЗАГРУЗКА СОЕДИНЕНИЙ
+		##for left_port : FromToWith in save_graph[big_instr][GraphNodeConstants.LEFT_PORTS_DATA_NAME]:
+			##
+			##if left_port.to_obj is String:
+				##continue
+			##
+			##graph_edit.connect_node(
+				##big_instr_to_node[left_port.to_obj].name, left_port.to_data.port_num,
+				##big_instr_to_node[big_instr].name,left_port.from_data.port_num
+				##)
+			##
+		##for right_port : FromToWith in save_graph[big_instr][GraphNodeConstants.RIGHT_PORTS_DATA_NAME]:
+			##
+			##if right_port.to_obj is String:
+				##continue
+			##
+			##graph_edit.connect_node(
+				##big_instr_to_node[big_instr].name,right_port.from_data.port_num,
+				##big_instr_to_node[right_port.to_obj].name, right_port.to_data.port_num
+				##)

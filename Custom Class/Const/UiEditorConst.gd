@@ -16,6 +16,8 @@ const RenameSceneBut : String = "Rename Scene"
 
 ## //
 const AddNode : String = "AddNode:"
+const CopyNode : String = "CopyNode"
+const DelNode : String = "DelNode"
 
 # /
 

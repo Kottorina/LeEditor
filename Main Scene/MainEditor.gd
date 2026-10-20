@@ -10,7 +10,7 @@ var editor_data : LeFileSystem
 
 
 @export_group("System")
-@export var system_ar : Array[Node]
+@export var system_ar : Array[Node] # Определяет Порядок Загрузки, В Случае Изменения - Дебажить!
 
 @export_group("ui")
 @export var FileNameLab : Label
@@ -35,18 +35,35 @@ func _ready() -> void:
 			print(system.name," Dont Have", EditorConst.StartBake)
 	
 func GetArrayFromScriptAndDir( path : String, find_script : Script ) -> Array:
+
+	var return_ar : Array = []
+	var file_ar : Array[Resource] = GetFilesFromPathRecurs(path)
+	for file in file_ar:
+		if file.get_script() == find_script:
+			return_ar.append(file)
+	return return_ar
+
+#file_name.
+#file.resource_name = base_file.file_name
+
+func GetFilesFromPathRecurs( path : String) ->  Array[Resource]:
 	var dir = DirAccess.open(path)
 	if !dir:
 		return []
-	var return_ar : Array = []
-	var files_name = dir.get_files()
-	for file_name in files_name:
-		var full_path = path.path_join(file_name)
-		var file = load(full_path)
-		if file.get_script() == find_script:
-			file.resource_name = file_name.trim_suffix(".tres")
-			return_ar.append(file)
-	return return_ar
+	
+	var file_ar : Array[Resource] = []
+	
+	for file_name in dir.get_files():
+		var file = load(path.path_join(file_name))
+		file.resource_name = file_name.trim_suffix(".tres")
+		file_ar.append(file)
+	
+	for dir_path in dir.get_directories():
+		var new_path = path.path_join(dir_path)
+		var deep_file_ar : Array[Resource] = GetFilesFromPathRecurs(new_path)
+		file_ar.append_array(deep_file_ar)
+	
+	return file_ar
 
 func GetArEditorlayers() -> Array:
 	var ar = GetArrayFromScriptAndDir( editor_layer_dir_path, EditorLayer )
@@ -109,7 +126,8 @@ func SaveCurrentEditorData() -> void:
 			var save_cont : SaveContainer = cal.call()
 			editor_data.RewritingCategory(save_cont.data_key,save_cont.le_file_ar)
 		else:
-			print(system.name," Dont Have ", EditorConst.GetSaveContainer)
+			#print(system.name," Dont Have ", EditorConst.GetSaveContainer)
+			pass
 	
 	ResourceSaver.save(editor_data, editor_setting.path_to_editor_data)
 ## СОХРАНЯЕТ ФАЙЛ НАСТРОЕК
