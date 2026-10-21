@@ -16,11 +16,16 @@ func LoadScene( scene : LeSceneFile ) -> void:
 	
 	graph_manager.ClearField()
 	
+	var id_graph_node_to_graph_data : Dictionary
 	for node_data in scene.graph_node_data_ar:
-		ui_node_maker.MakeNewGraphNode(
+		var id = ui_node_maker.MakeNewGraphNode(
 			ui_node_manager.FromInstructionKeyToGraphNodeMainInstr(node_data.instruction_key),
 			node_data.position_node,
 			node_data,
 			)
+		id_graph_node_to_graph_data[id] = node_data
+	
+	for connection_line in scene.connection_line_ar:
+		pass
 	
 	graph_manager.SetSceneUi(scene.ui_scene) ## В конце из за особенностей загрузки GraphManager

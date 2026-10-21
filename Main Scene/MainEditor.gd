@@ -130,6 +130,7 @@ func SaveCurrentEditorData() -> void:
 			pass
 	
 	ResourceSaver.save(editor_data, editor_setting.path_to_editor_data)
+	print("_Save CurrentEditorData")
 ## СОХРАНЯЕТ ФАЙЛ НАСТРОЕК
 func SaveEditorSetting() -> void:
 	if ! editor_setting:

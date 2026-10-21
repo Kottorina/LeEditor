@@ -1,16 +1,18 @@
-extends Node
+extends EditorSystem
 class_name UiNodeMaker
 
 @export var graph_manager : GraphManager
 
+var id_to_editor_graph_node_dict : Dictionary
+
 func MakeNewGraphNode(
 	ui_node_main_instr : GraphNodeMainInstr, coord : Vector2 = Vector2.ZERO,
 	graph_node_data : GraphNodeData = null
-	) -> void:
+	) -> int:
 	
 	if ! graph_manager:
 		push_error("graph_manager Is Null")
-		return
+		return NullId
 	
 	var new_graph_node := EditorGraphNode.new()
 	new_graph_node.title = UiEditorConst.UiGraphNodeMain[ui_node_main_instr.title]
@@ -112,3 +114,15 @@ func MakeNewGraphNode(
 		port_ind += 1
 	
 	graph_manager.add_child(new_graph_node)
+	
+	var id = GetFreeId()
+	id_to_editor_graph_node_dict[id] = new_graph_node
+	return id
+
+func FromIdToEditorGraphNode(id : int) -> EditorGraphNode:
+	if id_to_editor_graph_node_dict.has(id):
+		return id_to_editor_graph_node_dict[id]
+	return 
+
+func MakeConnection(from_id, from_port, to_id, to_port) -> void:
+	pass
