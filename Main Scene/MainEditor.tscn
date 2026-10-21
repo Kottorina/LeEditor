@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cv7jwmmq5cb4p"]
 
 [ext_resource type="Script" uid="uid://ct3vea5bq5x5v" path="res://addons/LeEditor/Main Scene/MainEditor.gd" id="1_t6pu0"]
-[ext_resource type="Resource" uid="uid://sf5cgdo2ap1o" path="res://addons/LeEditor/Objects/EditorSetting.tres" id="2_bqliu"]
+[ext_resource type="Resource" uid="uid://30korh85nc6y" path="res://addons/LeEditor/Objects/EditorSetting.tres" id="2_bqliu"]
 [ext_resource type="Theme" uid="uid://bwsyptdvotogc" path="res://addons/LeEditor/Objects/Theme/EditorTheme.tres" id="2_cw4tc"]
 [ext_resource type="Script" uid="uid://b17u2anbshfxq" path="res://addons/LeEditor/Main Scene/System/Ui/FileUi.gd" id="3_bs28w"]
 [ext_resource type="Theme" uid="uid://dglg5w03t8tsc" path="res://addons/LeEditor/Objects/Theme/EditorSmallTheme.tres" id="3_ulvws"]

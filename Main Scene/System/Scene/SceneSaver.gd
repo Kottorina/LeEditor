@@ -24,36 +24,36 @@ func GetActualScene() -> LeSceneFile:
 		
 		scene.graph_node_data_ar.append(node_data)
 	
-	var occupied_node_ar : Array = []
+	#var occupied_node_ar : Array = []
 	for graph_node in all_editor_geaph_node:
 		
 		var connections = graph_manager.get_connection_list_from_node(graph_node.name)
-		occupied_node_ar.append(graph_node.name)
+		#occupied_node_ar.append(graph_node.name)
 		
 		for connect_line in connections:
 			
-			if graph_node.name == connect_line[FromNode]:
-				if ! occupied_node_ar.has(connect_line[ToNode]):
-					var from_to_with := ConnectionLine.new()
-					
-					from_to_with.from_data = from_node_to_node_data_dict[connect_line[FromNode]]
-					from_to_with.from_port = connect_line[FromPort]
-					from_to_with.to_data = from_node_to_node_data_dict[connect_line[ToNode]]
-					from_to_with.to_port = connect_line[ToPort]
-					
-					scene.connection_line_ar.append(from_to_with)
-			elif graph_node.name == connect_line[ToNode]:
-				if ! occupied_node_ar.has(connect_line[FromNode]):
-					var from_to_with := ConnectionLine.new()
-					
-					from_to_with.from_data = from_node_to_node_data_dict[connect_line[ToNode]]
-					from_to_with.from_port = connect_line[ToPort]
-					from_to_with.to_data = from_node_to_node_data_dict[connect_line[FromNode]]
-					from_to_with.to_port = connect_line[FromPort]
-					
-					scene.connection_line_ar.append(from_to_with)
-			else:
-				push_error("FromToWith ERROR")
+			#if graph_node.name == connect_line[FromNode]:
+			#if ! occupied_node_ar.has(connect_line[ToNode]):
+			var from_to_with := ConnectionLine.new()
+				
+			from_to_with.from_data = from_node_to_node_data_dict[connect_line[FromNode]]
+			from_to_with.from_port = connect_line[FromPort]
+			from_to_with.to_data = from_node_to_node_data_dict[connect_line[ToNode]]
+			from_to_with.to_port = connect_line[ToPort]
+				
+			scene.connection_line_ar.append(from_to_with)
+			#elif graph_node.name == connect_line[ToNode]:
+				#if ! occupied_node_ar.has(connect_line[FromNode]):
+					#var from_to_with := ConnectionLine.new()
+					#
+					#from_to_with.from_data = from_node_to_node_data_dict[connect_line[ToNode]]
+					#from_to_with.from_port = connect_line[ToPort]
+					#from_to_with.to_data = from_node_to_node_data_dict[connect_line[FromNode]]
+					#from_to_with.to_port = connect_line[FromPort]
+					#
+					#scene.connection_line_ar.append(from_to_with)
+			#else:
+				#push_error("FromToWith ERROR")
 	
 	return scene
 

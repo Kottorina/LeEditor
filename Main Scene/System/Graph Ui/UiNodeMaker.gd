@@ -125,4 +125,9 @@ func FromIdToEditorGraphNode(id : int) -> EditorGraphNode:
 	return 
 
 func MakeConnection(from_id, from_port, to_id, to_port) -> void:
-	pass
+	graph_manager.connect_node(
+		id_to_editor_graph_node_dict[from_id].name,
+		from_port,
+		id_to_editor_graph_node_dict[to_id].name,
+		to_port,
+	)
