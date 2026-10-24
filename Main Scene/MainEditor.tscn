@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cv7jwmmq5cb4p"]
 
 [ext_resource type="Script" uid="uid://ct3vea5bq5x5v" path="res://addons/LeEditor/Main Scene/MainEditor.gd" id="1_t6pu0"]
-[ext_resource type="Resource" uid="uid://30korh85nc6y" path="res://addons/LeEditor/Objects/EditorSetting.tres" id="2_bqliu"]
+[ext_resource type="Resource" uid="uid://bwb5rqq5ef6ol" path="res://addons/LeEditor/Objects/EditorSetting.tres" id="2_bqliu"]
 [ext_resource type="Theme" uid="uid://bwsyptdvotogc" path="res://addons/LeEditor/Objects/Theme/EditorTheme.tres" id="2_cw4tc"]
 [ext_resource type="Script" uid="uid://b17u2anbshfxq" path="res://addons/LeEditor/Main Scene/System/Ui/FileUi.gd" id="3_bs28w"]
 [ext_resource type="Theme" uid="uid://dglg5w03t8tsc" path="res://addons/LeEditor/Objects/Theme/EditorSmallTheme.tres" id="3_ulvws"]
@@ -20,6 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://6devv7ol036q" path="res://addons/LeEditor/Old/scene/in ui/Settings/PathUi/PathUi.tscn" id="17_m4bvh"]
 [ext_resource type="Script" uid="uid://cjex7dj8gckg2" path="res://addons/LeEditor/Old/scene/path_baker.gd" id="18_t6pu0"]
 [ext_resource type="Script" uid="uid://21jxmcwtjhm1" path="res://addons/LeEditor/Main Scene/System/Layer/LayerManager.gd" id="19_0w74o"]
+[ext_resource type="Script" uid="uid://btu05ti727lt2" path="res://addons/LeEditor/Main Scene/System/Scene/SceneBaker.gd" id="19_28lud"]
 [ext_resource type="Script" uid="uid://dcggylv8ku0fg" path="res://addons/LeEditor/Old/scene/oth func/load_graph.gd" id="19_mfmn2"]
 [ext_resource type="Script" uid="uid://db0ils4qccpsj" path="res://addons/LeEditor/Main Scene/System/Graph Ui/UiNodeMaker.gd" id="19_tey8d"]
 [ext_resource type="Script" uid="uid://dvhimjq1675qn" path="res://addons/LeEditor/Old/scene/oth func/save_graph.gd" id="20_q2y4y"]
@@ -370,6 +371,10 @@ metadata/_custom_type_script = "uid://5m715c6nyvpw"
 script = ExtResource("17_e73lv")
 graph_manager = NodePath("../../Panel/BaseEditorContainer/GraphManager")
 metadata/_custom_type_script = "uid://dc1dclecfjwgy"
+
+[node name="SceneBaker" type="Node" parent="SceneManager" unique_id=1522618140]
+script = ExtResource("19_28lud")
+metadata/_custom_type_script = "uid://btu05ti727lt2"
 
 [node name="UiNodeManager" type="Node" parent="." unique_id=571810204 node_paths=PackedStringArray("main_editor", "graph_manager", "ui_node_maker")]
 script = ExtResource("15_t6pu0")

@@ -1,0 +1,2 @@
+extends EditorSystem
+class_name SceneBaker
