@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://c8qj3li15vno0" path="res://addons/LeEditor/Old/scene/setting_panel.gd" id="14_e73lv"]
 [ext_resource type="Script" uid="uid://8nkity7ndbby" path="res://addons/LeEditor/Main Scene/System/Scene/SceneManager.gd" id="15_4ecpn"]
 [ext_resource type="Script" uid="uid://laafe23yiddc" path="res://addons/LeEditor/Old/scene/in ui/Settings/FileSaveLoad.gd" id="15_6v83k"]
+[ext_resource type="Script" uid="uid://b8eep6tvhjd5l" path="res://addons/LeEditor/Main Scene/System/Baker/Baker.gd" id="15_28lud"]
 [ext_resource type="Script" uid="uid://b0snoxkkfxtj0" path="res://addons/LeEditor/Main Scene/System/Graph Ui/UiNodeManager.gd" id="15_t6pu0"]
 [ext_resource type="Script" uid="uid://b8ttd15d68gc0" path="res://addons/LeEditor/Old/scene/in ui/Settings/PathManageer.gd" id="16_28lud"]
 [ext_resource type="Script" uid="uid://5m715c6nyvpw" path="res://addons/LeEditor/Main Scene/System/Scene/SceneLoader.gd" id="16_h57ml"]
@@ -340,6 +341,10 @@ ui_manager = NodePath("../UiNodeManager")
 layer_lab = NodePath("../Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/Layer/LayerLabel")
 layer_option = NodePath("../Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/Layer/LayerOption")
 metadata/_custom_type_script = "uid://21jxmcwtjhm1"
+
+[node name="EditorBaker" type="Node" parent="LayerManager" unique_id=111990133]
+script = ExtResource("15_28lud")
+metadata/_custom_type_script = "uid://b8eep6tvhjd5l"
 
 [node name="SceneManager" type="Node" parent="." unique_id=1061025425 node_paths=PackedStringArray("main_editor", "scene_lab", "scene_option", "scene_add_but", "scene_del_but", "rename_but", "rename_text_edit", "scene_loader", "scene_saver")]
 script = ExtResource("15_4ecpn")

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="GraphNodeMainInstr" format=3 uid="uid://cko48jkmhoksf"]
+
+[ext_resource type="Script" uid="uid://d00teglne7h5j" path="res://addons/LeEditor/Custom Class/GraphNode/UiInstr/GraphNodeLayerInstr.gd" id="1_lfruj"]
+[ext_resource type="Script" uid="uid://c326de6spyr3y" path="res://addons/LeEditor/Custom Class/GraphNode/UiInstr/GraphNodeMainInstr.gd" id="2_kjlxw"]
+
+[resource]
+script = ExtResource("2_kjlxw")
+metadata/_custom_type_script = "uid://c326de6spyr3y"
