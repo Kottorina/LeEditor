@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://cv7jwmmq5cb4p"]
 
 [ext_resource type="Script" uid="uid://ct3vea5bq5x5v" path="res://addons/LeEditor/Main Scene/MainEditor.gd" id="1_t6pu0"]
-[ext_resource type="Resource" uid="uid://bwb5rqq5ef6ol" path="res://addons/LeEditor/Objects/EditorSetting.tres" id="2_bqliu"]
+[ext_resource type="Resource" uid="uid://cw8pbx0pyegl1" path="res://addons/LeEditor/Objects/EditorSetting.tres" id="2_bqliu"]
 [ext_resource type="Theme" uid="uid://bwsyptdvotogc" path="res://addons/LeEditor/Objects/Theme/EditorTheme.tres" id="2_cw4tc"]
 [ext_resource type="Script" uid="uid://b17u2anbshfxq" path="res://addons/LeEditor/Main Scene/System/Ui/FileUi.gd" id="3_bs28w"]
+[ext_resource type="Resource" uid="uid://cko48jkmhoksf" path="res://addons/LeEditor/Objects/EmptyObj/EmptyGraphNode.tres" id="3_m4bvh"]
 [ext_resource type="Theme" uid="uid://dglg5w03t8tsc" path="res://addons/LeEditor/Objects/Theme/EditorSmallTheme.tres" id="3_ulvws"]
 [ext_resource type="Script" uid="uid://bw0tkb4jo2ym4" path="res://addons/LeEditor/Old/scene/in ui/GraphNodeUiManager.gd" id="11_e73lv"]
 [ext_resource type="Script" uid="uid://cafpvhnljtusj" path="res://addons/LeEditor/Old/scene/in ui/EditorLayerManager.gd" id="12_t6pu0"]
@@ -42,8 +43,9 @@ PanelContainer/styles/panel = SubResource("StyleBoxFlat_dltes")
 [node name="MainEditor" type="Node" unique_id=169194402 node_paths=PackedStringArray("system_ar", "FileNameLab")]
 script = ExtResource("1_t6pu0")
 editor_setting = ExtResource("2_bqliu")
-system_ar = [NodePath("UiNodeManager"), NodePath("Panel/BaseEditorContainer/GraphManager"), NodePath("Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/FileUi"), NodePath("LayerManager"), NodePath("SceneManager")]
+system_ar = [NodePath("UiNodeManager/UiNodeMaker"), NodePath("UiNodeManager"), NodePath("Panel/BaseEditorContainer/GraphManager"), NodePath("Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/FileUi"), NodePath("LayerManager"), NodePath("SceneManager")]
 FileNameLab = NodePath("Panel/BaseEditorContainer/UpPanel/VBoxContainer/FileName")
+empty_graph_node_instr = ExtResource("3_m4bvh")
 metadata/_custom_type_script = "uid://ct3vea5bq5x5v"
 
 [node name="Panel" type="PanelContainer" parent="." unique_id=657537674]
@@ -219,13 +221,14 @@ layout_mode = 2
 size_flags_vertical = 4
 text = "Settings"
 
-[node name="GraphManager" type="GraphEdit" parent="Panel/BaseEditorContainer" unique_id=1868579466 node_paths=PackedStringArray("ui_node_manager")]
+[node name="GraphManager" type="GraphEdit" parent="Panel/BaseEditorContainer" unique_id=1868579466 node_paths=PackedStringArray("ui_node_manager", "ui_node_maker")]
 layout_mode = 2
 size_flags_vertical = 3
 minimap_enabled = false
 show_menu = false
 script = ExtResource("13_tey8d")
 ui_node_manager = NodePath("../../../UiNodeManager")
+ui_node_maker = NodePath("../../../UiNodeManager/UiNodeMaker")
 metadata/_custom_type_script = "uid://dccq0y6xy1ay3"
 
 [node name="SettingPanel" type="PanelContainer" parent="." unique_id=116755840 node_paths=PackedStringArray("close_open_but_ar")]
@@ -383,9 +386,10 @@ graph_manager = NodePath("../Panel/BaseEditorContainer/GraphManager")
 ui_node_maker = NodePath("UiNodeMaker")
 metadata/_custom_type_script = "uid://b0snoxkkfxtj0"
 
-[node name="UiNodeMaker" type="Node" parent="UiNodeManager" unique_id=1702566408 node_paths=PackedStringArray("graph_manager")]
+[node name="UiNodeMaker" type="Node" parent="UiNodeManager" unique_id=1702566408 node_paths=PackedStringArray("graph_manager", "main_editor")]
 script = ExtResource("19_tey8d")
 graph_manager = NodePath("../../Panel/BaseEditorContainer/GraphManager")
+main_editor = NodePath("../..")
 metadata/_custom_type_script = "uid://db0ils4qccpsj"
 
 [node name="Controller" type="Node" parent="." unique_id=1196004355 node_paths=PackedStringArray("main_editor")]

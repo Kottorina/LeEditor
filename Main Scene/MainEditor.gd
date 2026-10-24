@@ -14,6 +14,7 @@ var editor_data : LeFileSystem
 
 @export_group("ui")
 @export var FileNameLab : Label
+@export var empty_graph_node_instr : GraphNodeMainInstr
 
 func _ready() -> void:
 	
@@ -43,9 +44,6 @@ func GetArrayFromScriptAndDir( path : String, find_script : Script ) -> Array:
 			return_ar.append(file)
 	return return_ar
 
-#file_name.
-#file.resource_name = base_file.file_name
-
 func GetFilesFromPathRecurs( path : String) ->  Array[Resource]:
 	var dir = DirAccess.open(path)
 	if !dir:
@@ -68,11 +66,9 @@ func GetFilesFromPathRecurs( path : String) ->  Array[Resource]:
 func GetArEditorlayers() -> Array:
 	var ar = GetArrayFromScriptAndDir( editor_layer_dir_path, EditorLayer )
 	return ar
-
 func GetArGraphNodeInstrUiInstr() -> Array:
 	var ar = GetArrayFromScriptAndDir( graph_node_main_instr_path, GraphNodeMainInstr )
 	return ar
-
 
 func LoadEditorData( path : String ) -> void:
 	var load_node : Variant
@@ -128,15 +124,22 @@ func SaveCurrentEditorData() -> void:
 		else:
 			#print(system.name," Dont Have ", EditorConst.GetSaveContainer)
 			pass
-	
 	ResourceSaver.save(editor_data, editor_setting.path_to_editor_data)
 	print("_Save CurrentEditorData")
+	
+	if GetSettingValue(EditorConst.v_setting_is_auto_export):
+		ExportCurentScene()
+
+func ExportCurentScene() -> void:
+	print("_Export Curent Scene")
+
 ## СОХРАНЯЕТ ФАЙЛ НАСТРОЕК
 func SaveEditorSetting() -> void:
 	if ! editor_setting:
 		push_error("editor_setting Is Null")
 		return 
 	ResourceSaver.save(editor_setting)
+	print("_Save EditorSetting")
 
 #Array[EditorObjectLayer] ## Для обработки разных данных 
 #: Array[PathNode] ## Для обработки зависимостей

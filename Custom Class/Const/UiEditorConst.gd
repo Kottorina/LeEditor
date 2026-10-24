@@ -1,8 +1,10 @@
-extends Resource
+extends EditorConst
 class_name UiEditorConst
 
+# /
 const Empty : String = "Is Empty"
 
+const AutoExport : String = "Is Auto Export"
 const Save : String = "Save"
 const Open : String = "Open"
 const File : String = "File"
@@ -31,25 +33,38 @@ EnumAddNodeCategory.Dialogue : "Dialogue",
 EnumAddNodeCategory.Audio : "Audio",
 }
 
-# Заголовок Нода Графа
-enum EnumGraphNodeMain {
-StartBake, StartBakeEmpty
-}
-const UiGraphNodeMain : Dictionary = {
-EnumGraphNodeMain.StartBake : "Start Bake",
-EnumGraphNodeMain.StartBakeEmpty : "Start Empty Bake",
+# Title Самого EditorGraphNode
+const UiGraphNodeMainTitle : Dictionary = {
+GraphNodeType.Empty : "Empty!",
+
+GraphNodeType.StartBakeEmpty : "Start Empty Bake",
+
+GraphNodeType.DialogueStart : "Dialogue Start",
+GraphNodeType.DialogueLine : "Dialogue Line",
+GraphNodeType.DialogueChoise2 : "Dialogue Choise 2" ,
+GraphNodeType.DialogueChoise3 : "Dialogue Choise 3" ,
+GraphNodeType.DialogueChoise4 : "Dialogue Choise 4" ,
+GraphNodeType.DialogueChoise5 : "Dialogue Choise 5" ,
+GraphNodeType.DialogueSetting : "Dialogue Setting" ,
+GraphNodeType.DialogueToTool : "Dialogue To Tool" ,
+
 }
 
-# Заголовок Слоя В Ноде Графа
+# Title Слоя EditorGraphNode
 enum EnumGraphNodeLayer {
-ToolConnector,AudioConnector,DialogueConnector
+ToolConnector,AudioConnector,DialogueConnector,
+
+DialogueCharacter, DialogueLine, DialogueChoiseLine
 }
 const UiGraphNodeLayer : Dictionary = {
 EnumGraphNodeLayer.ToolConnector : "Tool Connector",
 EnumGraphNodeLayer.AudioConnector : "Audio Connector",
 EnumGraphNodeLayer.DialogueConnector : "Dialogue Connector",
-}
 
+EnumGraphNodeLayer.DialogueCharacter : "Dialogue Character",
+EnumGraphNodeLayer.DialogueLine : "Dialogue Line",
+EnumGraphNodeLayer.DialogueChoiseLine : "Dialogue Choise Line",
+}
 
 ## // 
 

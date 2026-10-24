@@ -1,9 +1,23 @@
 extends EditorSystem
 class_name UiNodeMaker
 
+@export_group("Managers")
 @export var graph_manager : GraphManager
+@export var main_editor : MainEditor
 
 var id_to_editor_graph_node_dict : Dictionary
+
+var empty_instruction_key : String
+func StartBake() -> void:
+	if ! main_editor:
+		push_error("main_editor Is Null")
+		return
+	
+	var empty_instr : GraphNodeMainInstr = main_editor.empty_graph_node_instr
+	if ! empty_instr:
+		push_error("empty_instr Is Null")
+		return
+	empty_instruction_key = empty_instr.resource_path.get_file().get_basename()
 
 func MakeNewGraphNode(
 	ui_node_main_instr : GraphNodeMainInstr, coord : Vector2 = Vector2.ZERO,
@@ -15,7 +29,7 @@ func MakeNewGraphNode(
 		return NullId
 	
 	var new_graph_node := EditorGraphNode.new()
-	new_graph_node.title = UiEditorConst.UiGraphNodeMain[ui_node_main_instr.title]
+	new_graph_node.title = UiEditorConst.UiGraphNodeMainTitle[ui_node_main_instr.type]
 	new_graph_node.position_offset = coord
 	
 	new_graph_node.type = ui_node_main_instr.type
@@ -122,12 +136,20 @@ func MakeNewGraphNode(
 func FromIdToEditorGraphNode(id : int) -> EditorGraphNode:
 	if id_to_editor_graph_node_dict.has(id):
 		return id_to_editor_graph_node_dict[id]
-	return 
+	return
 
 func MakeConnection(from_id, from_port, to_id, to_port) -> void:
-	graph_manager.connect_node(
-		id_to_editor_graph_node_dict[from_id].name,
-		from_port,
-		id_to_editor_graph_node_dict[to_id].name,
-		to_port,
-	)
+	if IdIsValid(from_id) and IdIsValid(to_id):
+		graph_manager.connect_node(
+			id_to_editor_graph_node_dict[from_id].name,
+			from_port,
+			id_to_editor_graph_node_dict[to_id].name,
+			to_port,
+		)
+
+func IdIsValid( id : int) -> bool:
+	if id_to_editor_graph_node_dict.has(id):
+		#print(id_to_editor_graph_node_dict[id].instruction_key, " : ", empty_instruction_key)
+		if id_to_editor_graph_node_dict[id].instruction_key != empty_instruction_key:
+			return true
+	return false

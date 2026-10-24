@@ -10,3 +10,6 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.keycode == KEY_S and event.ctrl_pressed:
 			main_editor.SaveCurrentEditorData()
+		
+		elif event.keycode == KEY_E and event.ctrl_pressed:
+			main_editor.ExportCurentScene()

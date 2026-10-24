@@ -1,10 +1,18 @@
 [gd_resource type="Resource" script_class="EditorLayer" format=3 uid="uid://1y3r60woxs7a"]
 
+[ext_resource type="Script" uid="uid://c326de6spyr3y" path="res://addons/LeEditor/Custom Class/GraphNode/UiInstr/GraphNodeMainInstr.gd" id="1_mw0dp"]
 [ext_resource type="Script" uid="uid://dyh1823n402rk" path="res://addons/LeEditor/Custom Class/EditorObjectLayer.gd" id="1_s11wl"]
+[ext_resource type="Resource" uid="uid://dhybnp2lry6j5" path="res://addons/LeEditor/Objects/Ui Node Instr/Dialogue/DialogueStart.tres" id="2_wnwyq"]
+[ext_resource type="Resource" uid="uid://dwlxnafdfn5f" path="res://addons/LeEditor/Objects/Ui Node Instr/Dialogue/DialogueLine.tres" id="2_xg6vh"]
+[ext_resource type="Resource" uid="uid://dd1wuk0hqvyyx" path="res://addons/LeEditor/Objects/Ui Node Instr/Dialogue/DialogueToTool.tres" id="3_cy7jj"]
+[ext_resource type="Resource" uid="uid://dquub80awiq38" path="res://addons/LeEditor/Objects/Ui Node Instr/Dialogue/DialogueChoise2.tres" id="5_61wog"]
+[ext_resource type="Resource" uid="uid://mnudhrbb87on" path="res://addons/LeEditor/Objects/Ui Node Instr/Dialogue/DialogueChoise3.tres" id="6_m4v0l"]
+[ext_resource type="Resource" uid="uid://bemyol0kr2hit" path="res://addons/LeEditor/Objects/Ui Node Instr/Dialogue/DialogueChoise4.tres" id="7_yq1tg"]
+[ext_resource type="Resource" uid="uid://c2qmaoyhvi6nj" path="res://addons/LeEditor/Objects/Ui Node Instr/Dialogue/DialogueChoise5.tres" id="8_cy7jj"]
+[ext_resource type="Resource" uid="uid://vh3j6blv573q" path="res://addons/LeEditor/Objects/Ui Node Instr/Dialogue/DialogueSettings.tres" id="8_yepmi"]
 
 [resource]
 script = ExtResource("1_s11wl")
 data_key = "Dialogue"
-Ui_StartBakeEmpty = true
-Ui_StartDialogue = true
+graph_node_instr_ar = Array[ExtResource("1_mw0dp")]([ExtResource("2_wnwyq"), ExtResource("3_cy7jj"), ExtResource("2_xg6vh"), ExtResource("5_61wog"), ExtResource("6_m4v0l"), ExtResource("7_yq1tg"), ExtResource("8_cy7jj"), ExtResource("8_yepmi")])
 metadata/_custom_type_script = "uid://dyh1823n402rk"

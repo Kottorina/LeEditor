@@ -78,16 +78,26 @@ func GetAllSelectedNode() -> Array[EditorGraphNode]:
 	return selected_node_ar
 
 const CopyPositionOffset := Vector2(-50,-50)
+const SelectedNewNode : bool = true
+const SelectedOldNode : bool = false
 func CopySelectedNode() -> void:
 	if ! ui_node_maker:
 		push_error("ui_node_maker Is Null")
 		return
 	
 	for node in GetAllSelectedNode():
-		pass
-		#var copy_node = node.duplicate(true)
-		#copy_node.position_offset += CopyPositionOffset
-		#add_child(copy_node)
+		node.selected = SelectedOldNode
+		
+		var instr_key : String = node.instruction_key
+		var new_position : Vector2 = node.position_offset + CopyPositionOffset
+		var graph_node_instr = ui_node_manager.FromInstructionKeyToGraphNodeMainInstr(
+			instr_key
+			)
+		var new_id : int = ui_node_maker.MakeNewGraphNode(graph_node_instr,new_position)
+		var editor_graph_node = ui_node_maker.FromIdToEditorGraphNode(new_id)
+		
+		editor_graph_node.selected = SelectedNewNode
+
 func DelSelectedNode() -> void:
 	for node in GetAllSelectedNode():
 		node.queue_free()
