@@ -120,6 +120,12 @@ func SaveCurrentEditorData() -> void:
 		var cal := Callable(system,EditorConst.GetSaveContainer)
 		if cal.is_valid():
 			var save_cont : SaveContainer = cal.call()
+			if ! save_cont:
+				push_error("Save Container Is Null")
+				continue
+			if ! save_cont.data_key or ! save_cont.le_file_ar:
+				push_error("Save Container ERROR")
+				continue
 			editor_data.RewritingCategory(save_cont.data_key,save_cont.le_file_ar)
 		else:
 			#print(system.name," Dont Have ", EditorConst.GetSaveContainer)

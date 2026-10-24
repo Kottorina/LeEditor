@@ -18,9 +18,10 @@ class_name SceneManager
 
 @export var scene_loader : SceneLoader
 @export var scene_saver : SceneSaver
+@export var scene_baker : SceneBaker
 
 func StartBake() -> void:
-	if ! scene_option or ! scene_lab or ! scene_add_but or ! scene_del_but or ! rename_but or ! rename_text_edit:
+	if ! scene_option or ! scene_lab or ! scene_add_but or ! scene_del_but or ! rename_but or ! rename_text_edit or ! scene_baker:
 		push_error("Ui Is Null")
 		return
 	scene_lab.text = UiEditorConst.CurrentScene
@@ -40,27 +41,46 @@ func StartBake() -> void:
 	if !rename_but.pressed.is_connected(RenameSelectedScene):
 		rename_but.pressed.connect(RenameSelectedScene)
 
+var curent_layer : EditorLayer
 func LoadLayer( layer : EditorLayer, ind : int = -1 ) -> void:
 	
 	scene_option.clear()
-	local_file_system = LeFileSystem.new()
 	
 	if layer == null:
 		push_error("layer Is Null")
 		return
 	print("_Load layer: ",layer.data_key)
+	LocalDataKey = layer.data_key
+	curent_layer = layer
+	
+	local_file_system = LeFileSystem.new()
 	
 	var editor_save : LeFileSystem = main_editor.GetActualEditorSave()
 	if editor_save == null:
 		push_warning("editor_save Is Null")
 		return
 	
-	LocalDataKey = layer.data_key
+	var metadata_obj : Variant = editor_save.GetObjectFromId(
+		LocalDataKey,EditorConst.scene_metadata_file_id
+		)
+	if metadata_obj is int:
+		if metadata_obj == LeFileSystem.ObjectIdNotFind:
+			local_file_system.AddObjInArray(
+				LocalDataKey, LeScenesMetadataFile.new(), EditorConst.scene_metadata_file_id
+				)
+	elif metadata_obj is LeScenesMetadataFile:
+		local_file_system.AddObjInArray(
+				LocalDataKey, metadata_obj, EditorConst.scene_metadata_file_id
+				)
+	else:
+		push_error("Metadata ERROR")
+		return
 	
 	var file_scene_ar : Array[LeFile] = editor_save.GetArFromKey(layer.data_key)
 	## ХРУПКАЯ ПРОВЕРКА, НО ПОЛНАЯ ПРОВЕРКА СИЛИШКОМ ДОЛГАЯ
-	for scene : LeSceneFile in file_scene_ar:
-		AddNewScene(scene,scene.id_,false)
+	for scene : LeFile in file_scene_ar:
+		if scene is LeSceneFile:
+			AddNewScene(scene,scene.id_,false)
 	
 	var last_ind : int
 	if ind == -1:
@@ -94,9 +114,8 @@ func AddNewScene(scene : LeSceneFile, id : int = -1, is_open : bool = true) -> v
 		scene_option.show_popup()
 
 func GetSaveContainer() -> SaveContainer:
-	
-	if ! scene_saver:
-		push_error("Scene Saver Is Empty")
+	if ! scene_saver or ! scene_baker or ! curent_layer.baker_rule:
+		push_error("Scene Saver ERRROR")
 		return
 	
 	var actual_scene : LeSceneFile = scene_saver.GetActualScene()
@@ -111,16 +130,39 @@ func GetSaveContainer() -> SaveContainer:
 			LeFileSystem.ObjectIdNotFind:
 				push_error("save_scene Is ObjectIdNotFind")
 		push_error("save_scene ERROR")
-	
 	elif from_file_scene is LeSceneFile: 
 		actual_scene.id_ = from_file_scene.id_
 		actual_scene.scene_name = from_file_scene.scene_name
+	
+	var from_file_metadata = local_file_system.GetObjectFromId(
+		LocalDataKey,EditorConst.scene_metadata_file_id
+		)
+	if from_file_metadata is int:
+		match from_file_metadata:
+			LeFileSystem.ERROR:
+				push_error("save_scene File System ERROR")
+				return
+			LeFileSystem.ObjectIdNotFind:
+				push_error("save_scene Is ObjectIdNotFind")
+				return
+		push_error("save_scene ERROR")
+		return
+	elif from_file_metadata is LeScenesMetadataFile:
+		from_file_metadata.scene_import[from_file_scene.id_] = scene_baker.GetValidDataNameArray(
+			curent_layer.baker_rule
+			)
 	
 	var save_container := SaveContainer.new()
 	save_container.data_key = LocalDataKey
 	
 	if actual_scene:
-		local_file_system.AddObjInArray(LocalDataKey,actual_scene,actual_scene.id_,true)
+		local_file_system.AddObjInArray(
+			LocalDataKey,actual_scene,actual_scene.id_,true
+			)
+	
+	local_file_system.AddObjInArray(
+		LocalDataKey,from_file_metadata,EditorConst.scene_metadata_file_id,true
+		)
 	
 	save_container.le_file_ar = local_file_system.GetArFromKey(LocalDataKey)
 	return save_container

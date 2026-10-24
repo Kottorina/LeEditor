@@ -9,6 +9,8 @@ const v_setting_is_auto_export : String = "is_auto_export"
 const StartBake : String = "StartBake"
 const GetSaveContainer : String = "GetSaveContainer"
 
+const scene_metadata_file_id : int = 0
+
 enum DataKey {
 Nothing,
 FirstData,

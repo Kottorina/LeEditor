@@ -3,7 +3,7 @@ class_name EditorLayer
 
 @export var data_key : String
 
-@export var baker_script : BakerMain ## Для Запекания
+@export var baker_rule : BakerRule ## Для Запекания
 
 @export var random_bool : bool
 

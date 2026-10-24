@@ -1,10 +1,16 @@
 extends Resource
-class_name BakerMain
-#
+class_name BakerRule
+
+@export var start_node_preset : GraphNodeMainInstr
+func GetInstructionKey() -> String:
+	if start_node_preset:
+		return start_node_preset.resource_path.get_file().get_basename()
+	push_error("start_node_preset Is Null")
+	return UiEditorConst.Empty
+
 #var ui_const_func := UiConstFunc.new()
 #var path_node_const := PathNodeConst.new()
-#
-#
+
 #const ROOMNODENAME = "Room Node: "
 #const ROOMS_UI_LOCATIONS : String = "Locations"
 #

@@ -18,7 +18,6 @@
 [ext_resource type="Script" uid="uid://5m715c6nyvpw" path="res://addons/LeEditor/Main Scene/System/Scene/SceneLoader.gd" id="16_h57ml"]
 [ext_resource type="Script" uid="uid://dfg821pwqs447" path="res://addons/LeEditor/Main Scene/controller.gd" id="16_v853t"]
 [ext_resource type="Script" uid="uid://dc1dclecfjwgy" path="res://addons/LeEditor/Main Scene/System/Scene/SceneSaver.gd" id="17_e73lv"]
-[ext_resource type="PackedScene" uid="uid://6devv7ol036q" path="res://addons/LeEditor/Old/scene/in ui/Settings/PathUi/PathUi.tscn" id="17_m4bvh"]
 [ext_resource type="Script" uid="uid://cjex7dj8gckg2" path="res://addons/LeEditor/Old/scene/path_baker.gd" id="18_t6pu0"]
 [ext_resource type="Script" uid="uid://21jxmcwtjhm1" path="res://addons/LeEditor/Main Scene/System/Layer/LayerManager.gd" id="19_0w74o"]
 [ext_resource type="Script" uid="uid://btu05ti727lt2" path="res://addons/LeEditor/Main Scene/System/Scene/SceneBaker.gd" id="19_28lud"]
@@ -301,16 +300,9 @@ text = "Save"
 [node name="HSeparator2" type="HSeparator" parent="SettingPanel/MarginContainer/VBoxContainer" unique_id=713787412]
 layout_mode = 2
 
-[node name="Path Manager" type="VBoxContainer" parent="SettingPanel/MarginContainer/VBoxContainer" unique_id=1339428865 node_paths=PackedStringArray("file_save_load", "path_baker", "bake_but", "type_data", "add_data_path_but", "path_cont")]
+[node name="Path Manager" type="VBoxContainer" parent="SettingPanel/MarginContainer/VBoxContainer" unique_id=1339428865]
 layout_mode = 2
 script = ExtResource("16_28lud")
-path_scene = ExtResource("17_m4bvh")
-file_save_load = NodePath("../File Save Load")
-path_baker = NodePath("PathBaker")
-bake_but = NodePath("Up Menu/bake")
-type_data = NodePath("Up Menu/Type Data")
-add_data_path_but = NodePath("Up Menu/Add Data Path")
-path_cont = NodePath("Path Cont")
 
 [node name="Up Menu" type="HBoxContainer" parent="SettingPanel/MarginContainer/VBoxContainer/Path Manager" unique_id=378005286]
 layout_mode = 2
@@ -350,7 +342,7 @@ metadata/_custom_type_script = "uid://21jxmcwtjhm1"
 script = ExtResource("15_28lud")
 metadata/_custom_type_script = "uid://b8eep6tvhjd5l"
 
-[node name="SceneManager" type="Node" parent="." unique_id=1061025425 node_paths=PackedStringArray("main_editor", "scene_lab", "scene_option", "scene_add_but", "scene_del_but", "rename_but", "rename_text_edit", "scene_loader", "scene_saver")]
+[node name="SceneManager" type="Node" parent="." unique_id=1061025425 node_paths=PackedStringArray("main_editor", "scene_lab", "scene_option", "scene_add_but", "scene_del_but", "rename_but", "rename_text_edit", "scene_loader", "scene_saver", "scene_baker")]
 script = ExtResource("15_4ecpn")
 main_editor = NodePath("..")
 scene_lab = NodePath("../Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/Scene/SceneLabel")
@@ -361,6 +353,7 @@ rename_but = NodePath("../Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPane
 rename_text_edit = NodePath("../Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/Scene/RenameTextEdit")
 scene_loader = NodePath("SceneLoader")
 scene_saver = NodePath("SceneSaver")
+scene_baker = NodePath("SceneBaker")
 metadata/_custom_type_script = "uid://8nkity7ndbby"
 
 [node name="SceneLoader" type="Node" parent="SceneManager" unique_id=916370199 node_paths=PackedStringArray("graph_manager", "ui_node_maker", "ui_node_manager")]
@@ -375,8 +368,9 @@ script = ExtResource("17_e73lv")
 graph_manager = NodePath("../../Panel/BaseEditorContainer/GraphManager")
 metadata/_custom_type_script = "uid://dc1dclecfjwgy"
 
-[node name="SceneBaker" type="Node" parent="SceneManager" unique_id=1522618140]
+[node name="SceneBaker" type="Node" parent="SceneManager" unique_id=1522618140 node_paths=PackedStringArray("graph_manager")]
 script = ExtResource("19_28lud")
+graph_manager = NodePath("../../Panel/BaseEditorContainer/GraphManager")
 metadata/_custom_type_script = "uid://btu05ti727lt2"
 
 [node name="UiNodeManager" type="Node" parent="." unique_id=571810204 node_paths=PackedStringArray("main_editor", "graph_manager", "ui_node_maker")]

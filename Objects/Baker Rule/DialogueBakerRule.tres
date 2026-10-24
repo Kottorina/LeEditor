@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="BakerRule" format=3 uid="uid://dtc4karddexfy"]
+
+[ext_resource type="Script" uid="uid://bqes3c4ktelue" path="res://addons/LeEditor/Custom Class/Bakers/BakerRule.gd" id="1_k0dvp"]
+[ext_resource type="Resource" uid="uid://dhybnp2lry6j5" path="res://addons/LeEditor/Objects/Ui Node Instr/Dialogue/DialogueStart.tres" id="2_1m0av"]
+
+[resource]
+script = ExtResource("1_k0dvp")
+start_node_preset = ExtResource("2_1m0av")
+metadata/_custom_type_script = "uid://bqes3c4ktelue"
