@@ -26,7 +26,7 @@ func StartBake() -> void:
 	
 	var layer_ar : Array = main_editor.GetArEditorlayers()
 	for layer : EditorLayer in layer_ar:
-		layer_option.add_item(layer.data_key,item_ar.size())
+		layer_option.add_item(layer.resource_name,item_ar.size())
 		item_ar.append(layer)
 	
 	if ! layer_option.item_selected.is_connected(ItemSelected):

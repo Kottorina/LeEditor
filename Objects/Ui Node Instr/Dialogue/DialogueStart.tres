@@ -9,14 +9,14 @@ title = 2
 body_node = 2
 body_data_key = 1
 is_left = true
-left_connector_type = 1
+left_connector_type = 2
 is_right = true
-right_connector_type = 1
+right_connector_type = 2
 metadata/_custom_type_script = "uid://d00teglne7h5j"
 
 [resource]
 script = ExtResource("2_nov2u")
-type = 2
+type = 3
 ui_category = 1
 layer_instr_ar = Array[ExtResource("1_ruifh")]([SubResource("Resource_tey8d")])
 metadata/_custom_type_script = "uid://c326de6spyr3y"

@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="GraphNodeMainInstr" format=3 uid="uid://ch541gm4vkdr4"]
+
+[ext_resource type="Script" uid="uid://d00teglne7h5j" path="res://addons/LeEditor/Custom Class/GraphNode/UiInstr/GraphNodeLayerInstr.gd" id="1_s2hob"]
+[ext_resource type="Script" uid="uid://c326de6spyr3y" path="res://addons/LeEditor/Custom Class/GraphNode/UiInstr/GraphNodeMainInstr.gd" id="2_tsrd3"]
+
+[sub_resource type="Resource" id="Resource_ic4go"]
+script = ExtResource("1_s2hob")
+title = 3
+body_node = 4
+body_data_key = 1
+is_left = true
+left_connector_type = 0
+is_right = true
+right_connector_type = 0
+preset_data = 1
+metadata/_custom_type_script = "uid://d00teglne7h5j"
+
+[resource]
+script = ExtResource("2_tsrd3")
+type = 1
+layer_instr_ar = Array[ExtResource("1_s2hob")]([SubResource("Resource_ic4go")])
+metadata/_custom_type_script = "uid://c326de6spyr3y"

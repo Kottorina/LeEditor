@@ -13,14 +13,14 @@ metadata/_custom_type_script = "uid://d00teglne7h5j"
 script = ExtResource("1_nrdvq")
 title = 2
 is_left = true
-left_connector_type = 1
+left_connector_type = 2
 is_right = true
-right_connector_type = 1
+right_connector_type = 2
 metadata/_custom_type_script = "uid://d00teglne7h5j"
 
 [resource]
 script = ExtResource("2_8h6wt")
-type = 9
+type = 10
 ui_category = 1
 layer_instr_ar = Array[ExtResource("1_nrdvq")]([SubResource("Resource_m4bvh"), SubResource("Resource_mfmn2")])
 metadata/_custom_type_script = "uid://c326de6spyr3y"

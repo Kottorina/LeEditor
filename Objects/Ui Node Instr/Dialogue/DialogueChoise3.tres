@@ -7,61 +7,61 @@
 script = ExtResource("1_van6o")
 title = 2
 is_left = true
-left_connector_type = 1
+left_connector_type = 2
 is_right = true
-right_connector_type = 1
+right_connector_type = 2
 metadata/_custom_type_script = "uid://d00teglne7h5j"
 
 [sub_resource type="Resource" id="Resource_m4bvh"]
 script = ExtResource("1_van6o")
-title = 3
+title = 4
 body_node = 2
 body_data_key = 1
 metadata/_custom_type_script = "uid://d00teglne7h5j"
 
 [sub_resource type="Resource" id="Resource_50jcm"]
 script = ExtResource("1_van6o")
-title = 4
+title = 5
 body_node = 2
 body_data_key = 2
 metadata/_custom_type_script = "uid://d00teglne7h5j"
 
 [sub_resource type="Resource" id="Resource_uaxxm"]
 script = ExtResource("1_van6o")
-title = 5
+title = 6
 body_node = 2
 body_data_key = 3
 is_left = true
-left_connector_type = 1
+left_connector_type = 2
 is_right = true
-right_connector_type = 1
+right_connector_type = 2
 metadata/_custom_type_script = "uid://d00teglne7h5j"
 
 [sub_resource type="Resource" id="Resource_vmxa6"]
 script = ExtResource("1_van6o")
-title = 5
+title = 6
 body_node = 2
 body_data_key = 4
 is_left = true
-left_connector_type = 1
+left_connector_type = 2
 is_right = true
-right_connector_type = 1
+right_connector_type = 2
 metadata/_custom_type_script = "uid://d00teglne7h5j"
 
 [sub_resource type="Resource" id="Resource_pu4p1"]
 script = ExtResource("1_van6o")
-title = 5
+title = 6
 body_node = 2
 body_data_key = 5
 is_left = true
-left_connector_type = 1
+left_connector_type = 2
 is_right = true
-right_connector_type = 1
+right_connector_type = 2
 metadata/_custom_type_script = "uid://d00teglne7h5j"
 
 [resource]
 script = ExtResource("2_7spth")
-type = 5
+type = 6
 ui_category = 1
 layer_instr_ar = Array[ExtResource("1_van6o")]([SubResource("Resource_pqsuj"), SubResource("Resource_m4bvh"), SubResource("Resource_50jcm"), SubResource("Resource_uaxxm"), SubResource("Resource_vmxa6"), SubResource("Resource_pu4p1")])
 metadata/_custom_type_script = "uid://c326de6spyr3y"

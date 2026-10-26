@@ -2,7 +2,7 @@ extends Resource
 class_name BakerRule
 
 @export var start_node_preset : GraphNodeMainInstr
-func GetInstructionKey() -> String:
+func GetStartInstructionKey() -> String:
 	if start_node_preset:
 		return start_node_preset.resource_path.get_file().get_basename()
 	push_error("start_node_preset Is Null")

@@ -1,9 +1,13 @@
 [gd_resource type="Resource" script_class="EditorLayer" format=3 uid="uid://cnr7avk0ii8wd"]
 
 [ext_resource type="Script" uid="uid://dyh1823n402rk" path="res://addons/LeEditor/Custom Class/EditorObjectLayer.gd" id="1_n8swu"]
+[ext_resource type="Resource" uid="uid://do2bj3ftvlolx" path="res://addons/LeEditor/Objects/Baker Rule/AudioBaker.tres" id="1_qbvee"]
+[ext_resource type="Script" uid="uid://c326de6spyr3y" path="res://addons/LeEditor/Custom Class/GraphNode/UiInstr/GraphNodeMainInstr.gd" id="2_tv6t7"]
+[ext_resource type="Resource" uid="uid://1y3r60woxs7a" path="res://addons/LeEditor/Objects/Layers/Editor/Dialogue.tres" id="4_tetao"]
 
 [resource]
 script = ExtResource("1_n8swu")
 data_key = "Audio"
-StartBakeEmpty = true
+baker_rule = ExtResource("1_qbvee")
+import_editor_layer_start_data = Array[ExtResource("1_n8swu")]([ExtResource("4_tetao")])
 metadata/_custom_type_script = "uid://dyh1823n402rk"

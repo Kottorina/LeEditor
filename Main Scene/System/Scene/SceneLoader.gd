@@ -33,7 +33,7 @@ func LoadScene( scene : LeSceneFile ) -> void:
 		else:
 			push_warning("graph_node_main_instr Is Null")
 	
-	for connection_line in scene.connection_line_ar:
+	for connection_line in scene.base_connection_line_ar:
 		if graph_data_to_id_dict.has(connection_line.from_data) and graph_data_to_id_dict.has(connection_line.to_data):
 			ui_node_maker.MakeConnection(
 				graph_data_to_id_dict[connection_line.from_data],

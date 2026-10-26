@@ -17,4 +17,5 @@ script = ExtResource("1_s11wl")
 data_key = "Dialogue"
 baker_rule = ExtResource("1_61wog")
 graph_node_instr_ar = Array[ExtResource("1_mw0dp")]([ExtResource("2_wnwyq"), ExtResource("3_cy7jj"), ExtResource("2_xg6vh"), ExtResource("5_61wog"), ExtResource("6_m4v0l"), ExtResource("7_yq1tg"), ExtResource("8_cy7jj"), ExtResource("8_yepmi")])
+self_import_editor_layer_start_data = true
 metadata/_custom_type_script = "uid://dyh1823n402rk"

@@ -2,6 +2,7 @@ extends GraphEdit
 class_name GraphManager
 
 @export_group("Managers")
+@export var main_editor : MainEditor
 @export var ui_node_manager : UiNodeManager
 @export var ui_node_maker : UiNodeMaker
 
@@ -33,7 +34,18 @@ func GetFreeId() -> int:
 	free_ind += 1
 	return free_ind
 
+var direction_instruction_key : String
 func StartBake() -> void:
+	
+	if ! main_editor:
+		push_error("main_editor Is Null")
+		return
+	var direction_instr : GraphNodeMainInstr = main_editor.direction_graph_node_instr
+	if ! direction_instr:
+		push_error("empty_instr Is Null")
+		return
+	direction_instruction_key = direction_instr.resource_path.get_file().get_basename()
+	
 	free_ind = EmptyId
 	
 	main_free_popup = PopupMenu.new()
@@ -102,11 +114,52 @@ func DelSelectedNode() -> void:
 	for node in GetAllSelectedNode():
 		node.queue_free()
 
+const PortNull : int = 0
+const FromNode : String = "from_node"
+const FromPort : String = "from_port"
+const ToNode : String = "to_node"
+const ToPort : String = "to_port"
 func OnConnectionRequest(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
-	if is_node_connected(from_node, from_port, to_node, to_port):
-		disconnect_node(from_node, from_port, to_node, to_port)
+	
+	var is_connected_flag : bool = false
+	var connection_dir_node_name : StringName 
+	
+	for connection in get_connection_list_from_node(from_node):
+		if get_node( NodePath(connection[ToNode]) ).instruction_key == direction_instruction_key:
+			if connection[FromPort] == from_port:
+				for connection_dir in get_connection_list_from_node(connection[ToNode]):
+					if connection_dir[ToNode] == to_node:
+						if connection_dir[ToPort] == to_port:
+							is_connected_flag = true
+							connection_dir_node_name = connection[ToNode]
+							break
+	
+	if is_connected_flag == true:
+		var dir_node = get_node( NodePath(connection_dir_node_name) )
+		if dir_node is EditorGraphNode:
+			dir_node.queue_free()
 	else:
-		connect_node(from_node, from_port, to_node, to_port)
+		if get_node( NodePath(from_node)) is EditorGraphNode and get_node( NodePath(to_node))is EditorGraphNode :
+			if get_node( NodePath(from_node)).instruction_key == direction_instruction_key and get_node( NodePath(to_node)).instruction_key == direction_instruction_key :
+				return
+			
+			var from : EditorGraphNode = get_node( NodePath(from_node))
+			var from_pos: Vector2 = from.position_offset + from.get_output_port_position(from_port)
+			
+			var to : EditorGraphNode = get_node( NodePath(to_node))
+			var to_pos: Vector2 = to.position_offset + to.get_input_port_position(to_port)
+			
+			var central_pos : Vector2 = (to_pos + from_pos) / 2
+			
+			var graph_node_main_instr = ui_node_manager.FromInstructionKeyToGraphNodeMainInstr(
+			 	direction_instruction_key
+				)
+			var cental_id : int = ui_node_maker.MakeNewGraphNode(graph_node_main_instr,central_pos)
+			var direction_node = ui_node_maker.FromIdToEditorGraphNode(cental_id)
+			
+			connect_node(from_node, from_port, direction_node.name, PortNull)
+			connect_node(direction_node.name, PortNull, to_node, to_port)
+#			connect_node(from_node, from_port, to_node, to_port)
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:

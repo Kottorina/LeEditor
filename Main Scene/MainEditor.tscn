@@ -1,11 +1,12 @@
 [gd_scene format=3 uid="uid://cv7jwmmq5cb4p"]
 
 [ext_resource type="Script" uid="uid://ct3vea5bq5x5v" path="res://addons/LeEditor/Main Scene/MainEditor.gd" id="1_t6pu0"]
-[ext_resource type="Resource" uid="uid://cw8pbx0pyegl1" path="res://addons/LeEditor/Objects/EditorSetting.tres" id="2_bqliu"]
+[ext_resource type="Resource" uid="uid://c8b5ckb63u6dc" path="res://addons/LeEditor/Objects/EditorSetting.tres" id="2_bqliu"]
 [ext_resource type="Theme" uid="uid://bwsyptdvotogc" path="res://addons/LeEditor/Objects/Theme/EditorTheme.tres" id="2_cw4tc"]
 [ext_resource type="Script" uid="uid://b17u2anbshfxq" path="res://addons/LeEditor/Main Scene/System/Ui/FileUi.gd" id="3_bs28w"]
-[ext_resource type="Resource" uid="uid://cko48jkmhoksf" path="res://addons/LeEditor/Objects/EmptyObj/EmptyGraphNode.tres" id="3_m4bvh"]
+[ext_resource type="Resource" uid="uid://cko48jkmhoksf" path="res://addons/LeEditor/Objects/Ui Node Instr/Empty/EmptyGraphNode.tres" id="3_m4bvh"]
 [ext_resource type="Theme" uid="uid://dglg5w03t8tsc" path="res://addons/LeEditor/Objects/Theme/EditorSmallTheme.tres" id="3_ulvws"]
+[ext_resource type="Resource" uid="uid://ch541gm4vkdr4" path="res://addons/LeEditor/Objects/Ui Node Instr/Direction/Direction.tres" id="4_m4bvh"]
 [ext_resource type="Script" uid="uid://bw0tkb4jo2ym4" path="res://addons/LeEditor/Old/scene/in ui/GraphNodeUiManager.gd" id="11_e73lv"]
 [ext_resource type="Script" uid="uid://cafpvhnljtusj" path="res://addons/LeEditor/Old/scene/in ui/EditorLayerManager.gd" id="12_t6pu0"]
 [ext_resource type="Script" uid="uid://dccq0y6xy1ay3" path="res://addons/LeEditor/Main Scene/System/Ui/GraphManager.gd" id="13_tey8d"]
@@ -42,9 +43,10 @@ PanelContainer/styles/panel = SubResource("StyleBoxFlat_dltes")
 [node name="MainEditor" type="Node" unique_id=169194402 node_paths=PackedStringArray("system_ar", "FileNameLab")]
 script = ExtResource("1_t6pu0")
 editor_setting = ExtResource("2_bqliu")
-system_ar = [NodePath("UiNodeManager/UiNodeMaker"), NodePath("UiNodeManager"), NodePath("Panel/BaseEditorContainer/GraphManager"), NodePath("Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/FileUi"), NodePath("LayerManager"), NodePath("SceneManager")]
+system_ar = [NodePath("UiNodeManager/UiNodeMaker"), NodePath("UiNodeManager"), NodePath("Panel/BaseEditorContainer/GraphManager"), NodePath("Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/FileUi"), NodePath("LayerManager"), NodePath("SceneManager"), NodePath("SceneManager/SceneSaver")]
 FileNameLab = NodePath("Panel/BaseEditorContainer/UpPanel/VBoxContainer/FileName")
 empty_graph_node_instr = ExtResource("3_m4bvh")
+direction_graph_node_instr = ExtResource("4_m4bvh")
 metadata/_custom_type_script = "uid://ct3vea5bq5x5v"
 
 [node name="Panel" type="PanelContainer" parent="." unique_id=657537674]
@@ -220,12 +222,20 @@ layout_mode = 2
 size_flags_vertical = 4
 text = "Settings"
 
-[node name="GraphManager" type="GraphEdit" parent="Panel/BaseEditorContainer" unique_id=1868579466 node_paths=PackedStringArray("ui_node_manager", "ui_node_maker")]
+[node name="GraphManager" type="GraphEdit" parent="Panel/BaseEditorContainer" unique_id=1868579466 node_paths=PackedStringArray("main_editor", "ui_node_manager", "ui_node_maker")]
 layout_mode = 2
 size_flags_vertical = 3
+connections = Array[Dictionary]([{
+"from_node": &"",
+"from_port": 0,
+"keep_alive": true,
+"to_node": &"",
+"to_port": 0
+}])
 minimap_enabled = false
 show_menu = false
 script = ExtResource("13_tey8d")
+main_editor = NodePath("../../..")
 ui_node_manager = NodePath("../../../UiNodeManager")
 ui_node_maker = NodePath("../../../UiNodeManager/UiNodeMaker")
 metadata/_custom_type_script = "uid://dccq0y6xy1ay3"
@@ -363,9 +373,11 @@ ui_node_maker = NodePath("../../UiNodeManager/UiNodeMaker")
 ui_node_manager = NodePath("../../UiNodeManager")
 metadata/_custom_type_script = "uid://5m715c6nyvpw"
 
-[node name="SceneSaver" type="Node" parent="SceneManager" unique_id=2140110476 node_paths=PackedStringArray("graph_manager")]
+[node name="SceneSaver" type="Node" parent="SceneManager" unique_id=2140110476 node_paths=PackedStringArray("ui_node_manager", "graph_manager", "main_editor")]
 script = ExtResource("17_e73lv")
+ui_node_manager = NodePath("../../UiNodeManager")
 graph_manager = NodePath("../../Panel/BaseEditorContainer/GraphManager")
+main_editor = NodePath("../..")
 metadata/_custom_type_script = "uid://dc1dclecfjwgy"
 
 [node name="SceneBaker" type="Node" parent="SceneManager" unique_id=1522618140 node_paths=PackedStringArray("graph_manager")]

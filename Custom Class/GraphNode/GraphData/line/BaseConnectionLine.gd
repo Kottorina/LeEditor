@@ -1,5 +1,5 @@
 extends Resource
-class_name ConnectionLine 
+class_name BaseConnectionLine 
 
 @export var from_data : GraphNodeData
 @export var from_port : int

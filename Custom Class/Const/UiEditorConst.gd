@@ -26,6 +26,7 @@ const DelNode : String = "DelNode"
 # Категория Нода В Ui
 enum EnumAddNodeCategory {
 Tool,Dialogue,Audio
+
 }
 const UiAddNodeCategory : Dictionary = {
 EnumAddNodeCategory.Tool : "Tool:",
@@ -36,6 +37,8 @@ EnumAddNodeCategory.Audio : "Audio",
 # Title Самого EditorGraphNode
 const UiGraphNodeMainTitle : Dictionary = {
 GraphNodeType.Empty : "Empty!",
+
+GraphNodeType.Direction : "Direction",
 
 GraphNodeType.StartBakeEmpty : "Start Empty Bake",
 
@@ -48,24 +51,37 @@ GraphNodeType.DialogueChoise5 : "Dialogue Choise 5" ,
 GraphNodeType.DialogueSetting : "Dialogue Setting" ,
 GraphNodeType.DialogueToTool : "Dialogue To Tool" ,
 
+GraphNodeType.MakeMetadataLink : "Make Metadata Link For:",
+
 }
 
 # Title Слоя EditorGraphNode
 enum EnumGraphNodeLayer {
 ToolConnector,AudioConnector,DialogueConnector,
 
+DialogueDirection,
 DialogueCharacter, DialogueLine, DialogueChoiseLine
 }
 const UiGraphNodeLayer : Dictionary = {
 EnumGraphNodeLayer.ToolConnector : "Tool Connector",
+
 EnumGraphNodeLayer.AudioConnector : "Audio Connector",
 EnumGraphNodeLayer.DialogueConnector : "Dialogue Connector",
 
+EnumGraphNodeLayer.DialogueDirection : "",
 EnumGraphNodeLayer.DialogueCharacter : "Dialogue Character",
 EnumGraphNodeLayer.DialogueLine : "Dialogue Line",
 EnumGraphNodeLayer.DialogueChoiseLine : "Dialogue Choise Line",
 }
 
+enum EnumPresetData {
+Nothing,
+Direction,
+}
+const UiSplitChar : String = "/" ## "/" Разделители Для OptionButton
+const UiPresetData : Dictionary = {
+EnumPresetData.Direction : (  "<-- Omnidir -->" + UiSplitChar + "--> Right -->" + UiSplitChar + "<-- Left <--" ),
+}
 ## // 
 
 const Del : String = "Del"

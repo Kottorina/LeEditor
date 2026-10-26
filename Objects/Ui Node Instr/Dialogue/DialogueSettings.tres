@@ -5,6 +5,6 @@
 
 [resource]
 script = ExtResource("2_tfmo8")
-type = 8
+type = 9
 ui_category = 1
 metadata/_custom_type_script = "uid://c326de6spyr3y"

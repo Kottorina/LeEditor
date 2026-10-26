@@ -15,6 +15,9 @@ var editor_data : LeFileSystem
 @export_group("ui")
 @export var FileNameLab : Label
 @export var empty_graph_node_instr : GraphNodeMainInstr
+@export var direction_graph_node_instr : GraphNodeMainInstr
+
+signal CurrentEditorSaveComplete
 
 func _ready() -> void:
 	
@@ -36,7 +39,6 @@ func _ready() -> void:
 			print(system.name," Dont Have", EditorConst.StartBake)
 	
 func GetArrayFromScriptAndDir( path : String, find_script : Script ) -> Array:
-
 	var return_ar : Array = []
 	var file_ar : Array[Resource] = GetFilesFromPathRecurs(path)
 	for file in file_ar:
@@ -127,11 +129,15 @@ func SaveCurrentEditorData() -> void:
 				push_error("Save Container ERROR")
 				continue
 			editor_data.RewritingCategory(save_cont.data_key,save_cont.le_file_ar)
-		else:
+		#else:
 			#print(system.name," Dont Have ", EditorConst.GetSaveContainer)
-			pass
-	ResourceSaver.save(editor_data, editor_setting.path_to_editor_data)
-	print("_Save CurrentEditorData")
+	
+	var er = ResourceSaver.save(editor_data, editor_setting.path_to_editor_data)
+	if er == Error.OK:
+		print("_Save CurrentEditorData")
+	else:
+		push_error("_Save ERROR")
+	CurrentEditorSaveComplete.emit()
 	
 	if GetSettingValue(EditorConst.v_setting_is_auto_export):
 		ExportCurentScene()

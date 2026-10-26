@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="BakerRule" format=3 uid="uid://do2bj3ftvlolx"]
+
+[ext_resource type="Script" uid="uid://bqes3c4ktelue" path="res://addons/LeEditor/Custom Class/Bakers/BakerRule.gd" id="1_8akqn"]
+
+[resource]
+script = ExtResource("1_8akqn")
+metadata/_custom_type_script = "uid://bqes3c4ktelue"

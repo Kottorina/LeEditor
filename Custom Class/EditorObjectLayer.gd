@@ -1,8 +1,6 @@
 extends Resource
 class_name EditorLayer
 
-@export var data_key : String
-
 @export var baker_rule : BakerRule ## Для Запекания
 
 @export var random_bool : bool
@@ -12,16 +10,23 @@ class_name EditorLayer
 @export_group("Ui")
 
 @export var graph_node_instr_ar : Array[GraphNodeMainInstr]
+@export var self_import_editor_layer_start_data : bool = false
+@export var import_editor_layer_start_data : Array[EditorLayer]
 
 func GetUiGraphNodeInstrKeys() -> Array[String]:
 	var ui_instr_key_ar: Array[String] = []
 	for graph_node in graph_node_instr_ar:
 		var name : String = graph_node.resource_path.get_file().get_basename()
 		ui_instr_key_ar.append(name)
-		#if name.begins_with(UiPrefix):
-			#if get(name) == true:
-				#ui_property_name_ar.append(name.trim_prefix(UiPrefix))
 	return ui_instr_key_ar
+
+func GetUiMakeLayer() -> Array[String]:
+	var ui_layer_key_ar: Array[String] = []
+	if self_import_editor_layer_start_data == true:
+		ui_layer_key_ar.append(resource_name)
+	for layer in import_editor_layer_start_data:
+		ui_layer_key_ar.append(layer.resource_name)
+	return ui_layer_key_ar
 
 #@export var ui_all_rnd_fork : bool = false
 #@export var ui_custom_big_instr : bool = false ## А ОНО НАМ ВООБЩЕ БЛЯДЬ НАДО В ЭТОМ ВИДЕ?

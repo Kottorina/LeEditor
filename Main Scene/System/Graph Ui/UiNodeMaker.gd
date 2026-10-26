@@ -8,6 +8,7 @@ class_name UiNodeMaker
 var id_to_editor_graph_node_dict : Dictionary
 
 var empty_instruction_key : String
+
 func StartBake() -> void:
 	if ! main_editor:
 		push_error("main_editor Is Null")
@@ -29,7 +30,9 @@ func MakeNewGraphNode(
 		return NullId
 	
 	var new_graph_node := EditorGraphNode.new()
-	new_graph_node.title = UiEditorConst.UiGraphNodeMainTitle[ui_node_main_instr.type]
+	
+	new_graph_node.title = ui_node_main_instr.GetTitle()
+	
 	new_graph_node.position_offset = coord
 	
 	new_graph_node.type = ui_node_main_instr.type
@@ -42,11 +45,17 @@ func MakeNewGraphNode(
 		var child_node : Control ## КОНТЕЙНЕР
 		var active_node : Control ## НОД ДЛЯ ВВОДА ДАННЫХ
 		
+		var title_layer_node : String
+		if layer.is_custom_title:
+			title_layer_node = layer.custom_title
+		else:
+			title_layer_node = UiEditorConst.UiGraphNodeLayer[layer.title]
+		
 		match layer.body_node:
 			EditorConst.BodyNode.Label_:
 				active_node = Label.new()
 				active_node.horizontal_alignment = GraphNodeConstants.LABEL_HORIZONTAL_ALIGNMENT
-				active_node.text = UiEditorConst.UiGraphNodeLayer[layer.title]
+				active_node.text = title_layer_node
 				new_graph_node.add_child(active_node)
 			
 			EditorConst.BodyNode.SpinBox_:
@@ -54,7 +63,7 @@ func MakeNewGraphNode(
 				
 				new_graph_node.add_child(child_node)
 				var label = Label.new()
-				label.text = UiEditorConst.UiGraphNodeLayer[layer.title]
+				label.text = title_layer_node
 				
 				active_node = SpinBox.new()
 				active_node.step = GraphNodeConstants.SPINBOX_BASE_STEP
@@ -72,7 +81,7 @@ func MakeNewGraphNode(
 				child_node = HBoxContainer.new()
 				
 				var label = Label.new()
-				label.text = UiEditorConst.UiGraphNodeLayer[layer.title]
+				label.text = title_layer_node
 				
 				active_node = TextEdit.new()
 				active_node.scroll_fit_content_height = GraphNodeConstants.TEXT_FIT_CONTENT_HEIGHT
@@ -92,7 +101,7 @@ func MakeNewGraphNode(
 				child_node = HBoxContainer.new()
 				
 				var label = Label.new()
-				label.text = UiEditorConst.UiGraphNodeLayer[layer.title]
+				label.text = title_layer_node
 				
 				active_node = CheckBox.new()
 				
@@ -103,6 +112,27 @@ func MakeNewGraphNode(
 					var data = graph_node_data.GetData(layer.body_data_key)
 					if data != null:
 						active_node.button_pressed = data
+					else:
+						push_warning("Data Is Null")
+			EditorConst.BodyNode.OptionButton_:
+				child_node = HBoxContainer.new()
+				
+				var label = Label.new()
+				label.text = title_layer_node
+				
+				active_node = OptionButton.new()
+				if layer.preset_data != UiEditorConst.EnumPresetData.Nothing:
+					if UiEditorConst.UiPresetData.has(layer.preset_data):
+						for str in UiEditorConst.UiPresetData[layer.preset_data].split(UiEditorConst.UiSplitChar):
+							active_node.add_item(str)
+				
+				new_graph_node.add_child(child_node)
+				child_node.add_child(label)
+				child_node.add_child(active_node)
+				if graph_node_data != null:
+					var data = graph_node_data.GetData(layer.body_data_key)
+					if data != null:
+						active_node.select(data)
 					else:
 						push_warning("Data Is Null")
 			

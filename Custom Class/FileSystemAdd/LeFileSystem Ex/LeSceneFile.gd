@@ -5,4 +5,5 @@ class_name LeSceneFile
 @export var ui_scene : SceneUi
 
 @export var graph_node_data_ar : Array[GraphNodeData]
-@export var connection_line_ar : Array[ConnectionLine]
+@export var base_connection_line_ar : Array[BaseConnectionLine]
+@export var full_connection_line_ar : Array[FullConnectionLine]

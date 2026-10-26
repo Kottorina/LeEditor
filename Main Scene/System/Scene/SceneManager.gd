@@ -49,8 +49,8 @@ func LoadLayer( layer : EditorLayer, ind : int = -1 ) -> void:
 	if layer == null:
 		push_error("layer Is Null")
 		return
-	print("_Load layer: ",layer.data_key)
-	LocalDataKey = layer.data_key
+	print("_Load layer: ",layer.resource_name)
+	LocalDataKey = layer.resource_name
 	curent_layer = layer
 	
 	local_file_system = LeFileSystem.new()
@@ -65,8 +65,10 @@ func LoadLayer( layer : EditorLayer, ind : int = -1 ) -> void:
 		)
 	if metadata_obj is int:
 		if metadata_obj == LeFileSystem.ObjectIdNotFind:
+			var new_metadata := LeScenesMetadataFile.new()
+			new_metadata.layer_data_key = layer.resource_name
 			local_file_system.AddObjInArray(
-				LocalDataKey, LeScenesMetadataFile.new(), EditorConst.scene_metadata_file_id
+				LocalDataKey, new_metadata, EditorConst.scene_metadata_file_id
 				)
 	elif metadata_obj is LeScenesMetadataFile:
 		local_file_system.AddObjInArray(
@@ -76,7 +78,7 @@ func LoadLayer( layer : EditorLayer, ind : int = -1 ) -> void:
 		push_error("Metadata ERROR")
 		return
 	
-	var file_scene_ar : Array[LeFile] = editor_save.GetArFromKey(layer.data_key)
+	var file_scene_ar : Array[LeFile] = editor_save.GetArFromKey(layer.resource_name)
 	## ХРУПКАЯ ПРОВЕРКА, НО ПОЛНАЯ ПРОВЕРКА СИЛИШКОМ ДОЛГАЯ
 	for scene : LeFile in file_scene_ar:
 		if scene is LeSceneFile:
@@ -114,11 +116,17 @@ func AddNewScene(scene : LeSceneFile, id : int = -1, is_open : bool = true) -> v
 		scene_option.show_popup()
 
 func GetSaveContainer() -> SaveContainer:
-	if ! scene_saver or ! scene_baker or ! curent_layer.baker_rule:
+	if ! curent_layer.baker_rule:
+		push_error("curent_layer.baker_rule Is Null")
+		return
+	if ! scene_saver or ! scene_baker:
 		push_error("Scene Saver ERRROR")
 		return
 	
 	var actual_scene : LeSceneFile = scene_saver.GetActualScene()
+	if ! actual_scene:
+		push_error("actual_scene Is Null, Save ERROR")
+		return
 	
 	var select_id = scene_option.get_selected_id()
 	
@@ -149,9 +157,9 @@ func GetSaveContainer() -> SaveContainer:
 		return
 	elif from_file_metadata is LeScenesMetadataFile:
 		from_file_metadata.scene_import[from_file_scene.id_] = scene_baker.GetValidDataNameArray(
-			curent_layer.baker_rule
+			curent_layer.baker_rule, actual_scene.graph_node_data_ar
 			)
-	
+		
 	var save_container := SaveContainer.new()
 	save_container.data_key = LocalDataKey
 	
