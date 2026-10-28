@@ -221,3 +221,23 @@ func GetActulaSceneMetadata() -> LeScenesMetadataFile:
 	var scene_metadata := LeScenesMetadataFile.new() 
 	
 	return scene_metadata
+
+func GetValidDataNameArray( 
+	baker : BakerRule, 
+	graph_node_data_ar : Array[GraphNodeData] 
+	) -> Array[String]:
+	
+	if ! graph_manager:
+		push_error("Get Valid ERROR")
+		return []
+	
+	var valid_data_name_ar : Array[String]
+	
+	var all_editor_geaph_node = graph_manager.GetAllEditorGraphNode()
+	for graph_node_data in graph_node_data_ar:
+		if graph_node_data.instruction_key == baker.GetStartInstructionKey():
+			valid_data_name_ar.append(
+				graph_node_data.GetData(EditorConst.ui_graph_node_start_data_key)
+				)
+	
+	return valid_data_name_ar

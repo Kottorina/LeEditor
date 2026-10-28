@@ -3,7 +3,7 @@ class_name UiNodeManager
 
 @export_group("Managers")
 @export var main_editor : MainEditor
-@export var graph_manager : GraphManager
+@export var add_node_popup_manager : AddNodePopupManager
 @export var ui_node_maker : UiNodeMaker
 
 var graph_node_main_inst_dict : Dictionary ## Общие Инструкции
@@ -33,10 +33,10 @@ func StartBake() -> void:
 	var empty_instr : GraphNodeMainInstr = main_editor.empty_graph_node_instr
 	empty_instruction_key = empty_instr.resource_path.get_file().get_basename()
 	
-	if ! main_editor.CurrentEditorSaveComplete.is_connected(
+	if ! main_editor.UpdateEditorSave.is_connected(
 			UpdateLayerGraphNodeMainInstrDict
 			):
-		main_editor.CurrentEditorSaveComplete.connect(
+		main_editor.UpdateEditorSave.connect(
 			UpdateLayerGraphNodeMainInstrDict
 			)
 	UpdateLayerGraphNodeMainInstrDict()
@@ -64,8 +64,7 @@ func UpdateLayerGraphNodeMainInstrDict() -> void:
 					metadata_file.layer_data_key, UiEditorConst.UiSplitChar,
 					scene_metadata_key, UiEditorConst.UiSplitChar,
 					start_link
-					) 
-				#print(instruction_key)
+					)
 				var new_graph_node_main_instr := GraphNodeMainInstr.new()
 				new_graph_node_main_instr.type = EditorConst.GraphNodeType.MakeMetadataLink
 				new_graph_node_main_instr.instruction_key = unic_instruction_key
@@ -102,12 +101,12 @@ var curent_layer : EditorLayer
 func LoadLayerUI( layer : EditorLayer ) -> void:
 	print("_Load Ui Layer For: ",layer.resource_name)
 	
-	if ! graph_manager:
+	if ! add_node_popup_manager:
 		push_error("graph_manager Is Null")
 		return
 	
 	id_to_graph_node_main_instr.clear()
-	graph_manager.ClearAddNodePopup()
+	add_node_popup_manager.Clear()
 	
 	var instruction_key_ar : Array[String] = layer.GetUiGraphNodeInstrKeys()
 
@@ -122,7 +121,7 @@ func LoadLayerUI( layer : EditorLayer ) -> void:
 			instruction_key
 			)
 		if ui_node_main is GraphNodeMainInstr:
-			var ui_popup_id : int = graph_manager.ExpandAddNodePopup(
+			var ui_popup_id : int = add_node_popup_manager.AddNode(
 				UiEditorConst.UiAddNodeCategory[ui_node_main.ui_category],
 				ui_node_main.GetTitle()
 				)

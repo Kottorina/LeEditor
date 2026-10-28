@@ -17,7 +17,7 @@ var editor_data : LeFileSystem
 @export var empty_graph_node_instr : GraphNodeMainInstr
 @export var direction_graph_node_instr : GraphNodeMainInstr
 
-signal CurrentEditorSaveComplete
+signal UpdateEditorSave
 
 func _ready() -> void:
 	
@@ -130,14 +130,14 @@ func SaveCurrentEditorData() -> void:
 				continue
 			editor_data.RewritingCategory(save_cont.data_key,save_cont.le_file_ar)
 		#else:
-			#print(system.name," Dont Have ", EditorConst.GetSaveContainer)
-	
+			#print(system.name," Dont Have ", EditorConst.GetSaveContainer) 
 	var er = ResourceSaver.save(editor_data, editor_setting.path_to_editor_data)
 	if er == Error.OK:
 		print("_Save CurrentEditorData")
 	else:
 		push_error("_Save ERROR")
-	CurrentEditorSaveComplete.emit()
+	
+	UpdateEditorSave.emit()
 	
 	if GetSettingValue(EditorConst.v_setting_is_auto_export):
 		ExportCurentScene()

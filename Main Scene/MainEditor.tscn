@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cv7jwmmq5cb4p"]
 
 [ext_resource type="Script" uid="uid://ct3vea5bq5x5v" path="res://addons/LeEditor/Main Scene/MainEditor.gd" id="1_t6pu0"]
-[ext_resource type="Resource" uid="uid://c8b5ckb63u6dc" path="res://addons/LeEditor/Objects/EditorSetting.tres" id="2_bqliu"]
+[ext_resource type="Resource" uid="uid://bwb5rqq5ef6ol" path="res://addons/LeEditor/Objects/EditorSetting.tres" id="2_bqliu"]
 [ext_resource type="Theme" uid="uid://bwsyptdvotogc" path="res://addons/LeEditor/Objects/Theme/EditorTheme.tres" id="2_cw4tc"]
 [ext_resource type="Script" uid="uid://b17u2anbshfxq" path="res://addons/LeEditor/Main Scene/System/Ui/FileUi.gd" id="3_bs28w"]
 [ext_resource type="Resource" uid="uid://cko48jkmhoksf" path="res://addons/LeEditor/Objects/Ui Node Instr/Empty/EmptyGraphNode.tres" id="3_m4bvh"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://8nkity7ndbby" path="res://addons/LeEditor/Main Scene/System/Scene/SceneManager.gd" id="15_4ecpn"]
 [ext_resource type="Script" uid="uid://laafe23yiddc" path="res://addons/LeEditor/Old/scene/in ui/Settings/FileSaveLoad.gd" id="15_6v83k"]
 [ext_resource type="Script" uid="uid://b8eep6tvhjd5l" path="res://addons/LeEditor/Main Scene/System/Baker/Baker.gd" id="15_28lud"]
+[ext_resource type="Script" uid="uid://btu05ti727lt2" path="res://addons/LeEditor/Main Scene/System/Export/ExportDataManager.gd" id="15_mfmn2"]
 [ext_resource type="Script" uid="uid://b0snoxkkfxtj0" path="res://addons/LeEditor/Main Scene/System/Graph Ui/UiNodeManager.gd" id="15_t6pu0"]
 [ext_resource type="Script" uid="uid://b8ttd15d68gc0" path="res://addons/LeEditor/Old/scene/in ui/Settings/PathManageer.gd" id="16_28lud"]
 [ext_resource type="Script" uid="uid://5m715c6nyvpw" path="res://addons/LeEditor/Main Scene/System/Scene/SceneLoader.gd" id="16_h57ml"]
@@ -21,12 +22,12 @@
 [ext_resource type="Script" uid="uid://dc1dclecfjwgy" path="res://addons/LeEditor/Main Scene/System/Scene/SceneSaver.gd" id="17_e73lv"]
 [ext_resource type="Script" uid="uid://cjex7dj8gckg2" path="res://addons/LeEditor/Old/scene/path_baker.gd" id="18_t6pu0"]
 [ext_resource type="Script" uid="uid://21jxmcwtjhm1" path="res://addons/LeEditor/Main Scene/System/Layer/LayerManager.gd" id="19_0w74o"]
-[ext_resource type="Script" uid="uid://btu05ti727lt2" path="res://addons/LeEditor/Main Scene/System/Scene/SceneBaker.gd" id="19_28lud"]
 [ext_resource type="Script" uid="uid://dcggylv8ku0fg" path="res://addons/LeEditor/Old/scene/oth func/load_graph.gd" id="19_mfmn2"]
 [ext_resource type="Script" uid="uid://db0ils4qccpsj" path="res://addons/LeEditor/Main Scene/System/Graph Ui/UiNodeMaker.gd" id="19_tey8d"]
 [ext_resource type="Script" uid="uid://dvhimjq1675qn" path="res://addons/LeEditor/Old/scene/oth func/save_graph.gd" id="20_q2y4y"]
 [ext_resource type="Script" uid="uid://b84tq8nurqye0" path="res://addons/LeEditor/Old/scene/make_ui/UiManager.gd" id="21_bf543"]
 [ext_resource type="Script" uid="uid://dw4dpickx4mej" path="res://addons/LeEditor/Old/scene/make_ui/UiAllBaker.gd" id="22_4jkxf"]
+[ext_resource type="Script" uid="uid://bqqulvs8445lk" path="res://addons/LeEditor/Main Scene/System/Ui/AddNodePopupManager.gd" id="22_m4bvh"]
 [ext_resource type="Script" uid="uid://cqp7fha5lc3tc" path="res://addons/LeEditor/Old/scene/make_ui/UiDialogueBaker.gd" id="23_c80mm"]
 [ext_resource type="Script" uid="uid://dvtq0kywvx3he" path="res://addons/LeEditor/Old/scene/make_ui/UiAudioBaker.gd" id="24_hrcbl"]
 
@@ -43,7 +44,7 @@ PanelContainer/styles/panel = SubResource("StyleBoxFlat_dltes")
 [node name="MainEditor" type="Node" unique_id=169194402 node_paths=PackedStringArray("system_ar", "FileNameLab")]
 script = ExtResource("1_t6pu0")
 editor_setting = ExtResource("2_bqliu")
-system_ar = [NodePath("UiNodeManager/UiNodeMaker"), NodePath("UiNodeManager"), NodePath("Panel/BaseEditorContainer/GraphManager"), NodePath("Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/FileUi"), NodePath("LayerManager"), NodePath("SceneManager"), NodePath("SceneManager/SceneSaver")]
+system_ar = [NodePath("UiNodeManager/UiNodeMaker"), NodePath("UiNodeManager"), NodePath("Panel/BaseEditorContainer/GraphManager"), NodePath("Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/FileUi"), NodePath("UiNodeManager/AddNodePopupManager"), NodePath("LayerManager"), NodePath("SceneManager"), NodePath("SceneManager/SceneSaver")]
 FileNameLab = NodePath("Panel/BaseEditorContainer/UpPanel/VBoxContainer/FileName")
 empty_graph_node_instr = ExtResource("3_m4bvh")
 direction_graph_node_instr = ExtResource("4_m4bvh")
@@ -339,6 +340,35 @@ layout_mode = 2
 [node name="PathBaker" type="Node" parent="SettingPanel/MarginContainer/VBoxContainer/Path Manager" unique_id=1552033074]
 script = ExtResource("18_t6pu0")
 
+[node name="ExportDataManager" type="Node" parent="." unique_id=1352881635]
+script = ExtResource("15_mfmn2")
+metadata/_custom_type_script = "uid://btu05ti727lt2"
+
+[node name="ExportWindow" type="Window" parent="ExportDataManager" unique_id=895773692]
+oversampling_override = 1.0
+initial_position = 1
+size = Vector2i(132, 100)
+visible = false
+wrap_controls = true
+always_on_top = true
+
+[node name="BoxContainer" type="BoxContainer" parent="ExportDataManager/ExportWindow" unique_id=205727904]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.0
+offset_top = -11.5
+offset_right = 68.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="ExportDataManager/ExportWindow/BoxContainer" unique_id=1700624334]
+layout_mode = 2
+text = "ьльщьошщошщ"
+
 [node name="LayerManager" type="Node" parent="." unique_id=1472008421 node_paths=PackedStringArray("main_editor", "scene_manager", "ui_manager", "layer_lab", "layer_option")]
 script = ExtResource("19_0w74o")
 main_editor = NodePath("..")
@@ -352,7 +382,7 @@ metadata/_custom_type_script = "uid://21jxmcwtjhm1"
 script = ExtResource("15_28lud")
 metadata/_custom_type_script = "uid://b8eep6tvhjd5l"
 
-[node name="SceneManager" type="Node" parent="." unique_id=1061025425 node_paths=PackedStringArray("main_editor", "scene_lab", "scene_option", "scene_add_but", "scene_del_but", "rename_but", "rename_text_edit", "scene_loader", "scene_saver", "scene_baker")]
+[node name="SceneManager" type="Node" parent="." unique_id=1061025425 node_paths=PackedStringArray("main_editor", "scene_lab", "scene_option", "scene_add_but", "scene_del_but", "rename_but", "rename_text_edit", "scene_loader", "scene_saver")]
 script = ExtResource("15_4ecpn")
 main_editor = NodePath("..")
 scene_lab = NodePath("../Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/Scene/SceneLabel")
@@ -363,7 +393,6 @@ rename_but = NodePath("../Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPane
 rename_text_edit = NodePath("../Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/Scene/RenameTextEdit")
 scene_loader = NodePath("SceneLoader")
 scene_saver = NodePath("SceneSaver")
-scene_baker = NodePath("SceneBaker")
 metadata/_custom_type_script = "uid://8nkity7ndbby"
 
 [node name="SceneLoader" type="Node" parent="SceneManager" unique_id=916370199 node_paths=PackedStringArray("graph_manager", "ui_node_maker", "ui_node_manager")]
@@ -380,15 +409,10 @@ graph_manager = NodePath("../../Panel/BaseEditorContainer/GraphManager")
 main_editor = NodePath("../..")
 metadata/_custom_type_script = "uid://dc1dclecfjwgy"
 
-[node name="SceneBaker" type="Node" parent="SceneManager" unique_id=1522618140 node_paths=PackedStringArray("graph_manager")]
-script = ExtResource("19_28lud")
-graph_manager = NodePath("../../Panel/BaseEditorContainer/GraphManager")
-metadata/_custom_type_script = "uid://btu05ti727lt2"
-
-[node name="UiNodeManager" type="Node" parent="." unique_id=571810204 node_paths=PackedStringArray("main_editor", "graph_manager", "ui_node_maker")]
+[node name="UiNodeManager" type="Node" parent="." unique_id=571810204 node_paths=PackedStringArray("main_editor", "add_node_popup_manager", "ui_node_maker")]
 script = ExtResource("15_t6pu0")
 main_editor = NodePath("..")
-graph_manager = NodePath("../Panel/BaseEditorContainer/GraphManager")
+add_node_popup_manager = NodePath("AddNodePopupManager")
 ui_node_maker = NodePath("UiNodeMaker")
 metadata/_custom_type_script = "uid://b0snoxkkfxtj0"
 
@@ -397,6 +421,12 @@ script = ExtResource("19_tey8d")
 graph_manager = NodePath("../../Panel/BaseEditorContainer/GraphManager")
 main_editor = NodePath("../..")
 metadata/_custom_type_script = "uid://db0ils4qccpsj"
+
+[node name="AddNodePopupManager" type="Node" parent="UiNodeManager" unique_id=1905218730 node_paths=PackedStringArray("graph_manager", "ui_node_manager")]
+script = ExtResource("22_m4bvh")
+graph_manager = NodePath("../../Panel/BaseEditorContainer/GraphManager")
+ui_node_manager = NodePath("..")
+metadata/_custom_type_script = "uid://bqqulvs8445lk"
 
 [node name="Controller" type="Node" parent="." unique_id=1196004355 node_paths=PackedStringArray("main_editor")]
 script = ExtResource("16_v853t")

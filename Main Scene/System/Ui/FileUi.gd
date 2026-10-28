@@ -27,13 +27,15 @@ func StartBake() -> void:
 	if ! main_popup.id_pressed.is_connected(ItemSelected):
 		main_popup.id_pressed.connect(ItemSelected)
 	
-	var id_0 : int = GetFreeId()
-	main_popup.add_item(UiEditorConst.Save,id_0)
-	item_dict[id_0] = Callable(main_editor, "SaveCurrentEditorData")
-	
-	var id_1 : int = GetFreeId()
-	main_popup.add_item(UiEditorConst.Open,id_1)
-	item_dict[id_1] = Callable(main_editor, "NewPath")
+	AddNewFuncItem(
+		UiEditorConst.Save,
+		Callable(main_editor, "SaveCurrentEditorData")
+		)
+
+	AddNewFuncItem(
+		UiEditorConst.Open,
+		Callable(main_editor, "NewPath")
+		)
 	
 	var id_2 : int = GetFreeId()
 	main_popup.add_check_item(UiEditorConst.AutoExport,id_2)
@@ -43,12 +45,25 @@ func StartBake() -> void:
 		EditorConst.v_setting_is_auto_export,
 		value
 		)
-	
 	var value_id_2 : bool = main_editor.GetSettingValue(
 		EditorConst.v_setting_is_auto_export
 		)
 	main_popup.set_item_checked(id_2, value_id_2)
 	item_bool_dict[id_2] = value_id_2
+	
+	AddNewFuncItem(
+		UiEditorConst.Export,
+		Callable(main_editor, "ExportCurentScene")
+		)
+	
+func AddNewFuncItem(text_item : String, calable : Callable) -> void:
+	var id = GetFreeId()
+	main_popup.add_item(text_item,id)
+	if ! calable.is_valid():
+		push_error("calable Is Not Valid")
+		return
+	item_dict[id] = calable
+	
 
 func ItemSelected( id : int ) -> void:
 	

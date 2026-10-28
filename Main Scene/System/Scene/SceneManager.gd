@@ -18,10 +18,9 @@ class_name SceneManager
 
 @export var scene_loader : SceneLoader
 @export var scene_saver : SceneSaver
-@export var scene_baker : SceneBaker
 
 func StartBake() -> void:
-	if ! scene_option or ! scene_lab or ! scene_add_but or ! scene_del_but or ! rename_but or ! rename_text_edit or ! scene_baker:
+	if ! scene_option or ! scene_lab or ! scene_add_but or ! scene_del_but or ! rename_but or ! rename_text_edit:
 		push_error("Ui Is Null")
 		return
 	scene_lab.text = UiEditorConst.CurrentScene
@@ -119,7 +118,7 @@ func GetSaveContainer() -> SaveContainer:
 	if ! curent_layer.baker_rule:
 		push_error("curent_layer.baker_rule Is Null")
 		return
-	if ! scene_saver or ! scene_baker:
+	if ! scene_saver:
 		push_error("Scene Saver ERRROR")
 		return
 	
@@ -156,7 +155,7 @@ func GetSaveContainer() -> SaveContainer:
 		push_error("save_scene ERROR")
 		return
 	elif from_file_metadata is LeScenesMetadataFile:
-		from_file_metadata.scene_import[from_file_scene.id_] = scene_baker.GetValidDataNameArray(
+		from_file_metadata.scene_import[from_file_scene.id_] = scene_saver.GetValidDataNameArray(
 			curent_layer.baker_rule, actual_scene.graph_node_data_ar
 			)
 		
