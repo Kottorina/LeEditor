@@ -145,7 +145,7 @@ extends Node
 		#### ЗАГРУЗКА СОЕДИНЕНИЙ
 		##for left_port : FromToWith in save_graph[big_instr][GraphNodeConstants.LEFT_PORTS_DATA_NAME]:
 			##
-			##if left_port.to_obj is String:
+			##Dont left_port.to_obj is String:
 				##continue
 			##
 			##graph_edit.connect_node(

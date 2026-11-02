@@ -1,6 +1,7 @@
 extends Node
 
 @export var main_editor : MainEditor
+@export var export_data_system : ExportDataSystem
 
 func _input(event: InputEvent) -> void:
 	if main_editor == null:
@@ -12,4 +13,4 @@ func _input(event: InputEvent) -> void:
 			main_editor.SaveCurrentEditorData()
 		
 		elif event.keycode == KEY_E and event.ctrl_pressed:
-			main_editor.ExportCurentScene()
+			export_data_system.Export()

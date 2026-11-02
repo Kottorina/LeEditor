@@ -8,7 +8,9 @@ class_name EditorSetting
 
 @export var path_to_editor_data : String
 @export var curent_layer : int
-@export var curent_scene : int
+@export var is_quick_export : bool 
+
+const name_is_auto_export : String = "is_auto_export"
+const name_is_quick_export : String = "is_quick_export"
 
 const Layer : String = "curent_layer"
-const Scene : String = "curent_scene"

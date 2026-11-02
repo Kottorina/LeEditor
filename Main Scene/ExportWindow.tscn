@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://de8sewxa1s4k"]
+
+[ext_resource type="Script" uid="uid://fknkljn8lwdo" path="res://addons/LeEditor/Main Scene/UiExportWindow.gd" id="1_2aj38"]
+[ext_resource type="Theme" uid="uid://bwsyptdvotogc" path="res://addons/LeEditor/Objects/Theme/EditorTheme.tres" id="1_apgot"]
+
+[node name="ExportWindow" type="Window" unique_id=46949498 node_paths=PackedStringArray("title_label", "final_export_button", "is_recursive_link_check")]
+oversampling_override = 1.0
+initial_position = 1
+wrap_controls = true
+unresizable = true
+always_on_top = true
+theme = ExtResource("1_apgot")
+script = ExtResource("1_2aj38")
+title_label = NodePath("MarginContainer/VBoxContainer/Title")
+final_export_button = NodePath("MarginContainer/VBoxContainer/Button")
+is_recursive_link_check = NodePath("MarginContainer/VBoxContainer/HBoxContainer3/Button2")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=58156988]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1415300954]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer" unique_id=202336022]
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=546030550]
+layout_mode = 2
+
+[node name="Button2" type="CheckBox" parent="MarginContainer/VBoxContainer/HBoxContainer3" unique_id=1471390118]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=155019371]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=2011350762]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer" unique_id=2013782861]
+layout_mode = 2

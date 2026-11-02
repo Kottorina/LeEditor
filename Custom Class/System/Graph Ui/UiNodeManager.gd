@@ -13,11 +13,14 @@ var id_to_graph_node_main_instr : Dictionary
 
 var empty_instruction_key : String
 ## ПОДГРУЖАЕТ ТАБЛИЦУ С ДИСКА, БАЗОВОЕ И ОПРЕДЕЛЕННОЕ
+var export_func : ExportFunc
 func StartBake() -> void:
 	if ! main_editor:
 		push_error("main_editor Is Null")
 		return
-
+	
+	export_func = ExportFunc.new()
+	
 	graph_node_main_inst_dict.clear()
 	
 	var graph_node_main_inst_ar : Array = main_editor.GetArGraphNodeInstrUiInstr()
@@ -59,11 +62,9 @@ func UpdateLayerGraphNodeMainInstrDict() -> void:
 	
 	for metadata_file : LeScenesMetadataFile in  all_metadata_scen_file:
 		for scene_metadata_key in metadata_file.scene_import.keys():
-			for start_link in metadata_file.scene_import[scene_metadata_key]:
-				var unic_instruction_key : String = str(
-					metadata_file.layer_data_key, UiEditorConst.UiSplitChar,
-					scene_metadata_key, UiEditorConst.UiSplitChar,
-					start_link
+			for link_name in metadata_file.scene_import[scene_metadata_key]:
+				var unic_instruction_key : String = export_func.FromMetadataToInstructionKey(
+					metadata_file.layer_data_key, scene_metadata_key, link_name
 					)
 				var new_graph_node_main_instr := GraphNodeMainInstr.new()
 				new_graph_node_main_instr.type = EditorConst.GraphNodeType.MakeMetadataLink

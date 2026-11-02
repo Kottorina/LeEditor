@@ -6,4 +6,4 @@ class_name LeSceneFile
 
 @export var graph_node_data_ar : Array[GraphNodeData]
 @export var base_connection_line_ar : Array[BaseConnectionLine]
-@export var full_connection_line_ar : Array[FullConnectionLine]
+@export var full_link : Dictionary

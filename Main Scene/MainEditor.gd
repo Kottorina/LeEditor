@@ -8,8 +8,8 @@ var editor_data : LeFileSystem
 @export var graph_node_main_instr_path : String = "res://addons/LeEditor/Objects/Ui Node Instr/"
 @export var link_layer_dir_path : String = "res://addons/LeEditor/Objects/Layers/Link"
 
-
 @export_group("System")
+@export var export_data_system : ExportDataSystem
 @export var system_ar : Array[Node] # Определяет Порядок Загрузки, В Случае Изменения - Дебажить!
 
 @export_group("ui")
@@ -18,6 +18,15 @@ var editor_data : LeFileSystem
 @export var direction_graph_node_instr : GraphNodeMainInstr
 
 signal UpdateEditorSave
+
+const f_set_setting_value : String = "SetSettingValue"
+const f_get_setting_value : String = "GetSettingValue"
+
+const StartBake : String = "StartBake"
+const GetSaveContainer : String = "GetSaveContainer"
+
+const F_SaveCurentData : String = "SaveCurrentEditorData"
+const F_NewPath : String =  "NewPath"
 
 func _ready() -> void:
 	
@@ -32,11 +41,11 @@ func _ready() -> void:
 	LoadEditorData(editor_setting.path_to_editor_data)
 	
 	for system : Node in system_ar:
-		var cal := Callable(system,EditorConst.StartBake)
+		var cal := Callable(system,StartBake)
 		if cal.is_valid():
 			cal.call()
 		else:
-			print(system.name," Dont Have", EditorConst.StartBake)
+			print(system.name," Dont Have Func",StartBake)
 	
 func GetArrayFromScriptAndDir( path : String, find_script : Script ) -> Array:
 	var return_ar : Array = []
@@ -114,12 +123,12 @@ func GetActualEditorSave() -> LeFileSystem:
 ##СОХРАНЯЕТ ФАЙЛ ДАННЫХ LeFileSystem
 func SaveCurrentEditorData() -> void:
 	var editor_data = GetActualEditorSave()
-	if ! editor_data or ! editor_setting.path_to_editor_data:
+	if ! editor_data or ! editor_setting.path_to_editor_data or ! export_data_system:
 		push_error("editor_data Save ERROR")
 		return
 	
 	for system : Node in system_ar:
-		var cal := Callable(system,EditorConst.GetSaveContainer)
+		var cal := Callable(system,GetSaveContainer)
 		if cal.is_valid():
 			var save_cont : SaveContainer = cal.call()
 			if ! save_cont:
@@ -139,11 +148,8 @@ func SaveCurrentEditorData() -> void:
 	
 	UpdateEditorSave.emit()
 	
-	if GetSettingValue(EditorConst.v_setting_is_auto_export):
-		ExportCurentScene()
-
-func ExportCurentScene() -> void:
-	print("_Export Curent Scene")
+	if GetSettingValue(EditorSetting.name_is_auto_export):
+		export_data_system.Export()
 
 ## СОХРАНЯЕТ ФАЙЛ НАСТРОЕК
 func SaveEditorSetting() -> void:

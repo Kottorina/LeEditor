@@ -1,6 +1,8 @@
 extends MenuButton
 
+@export_group("System")
 @export var main_editor : MainEditor
+@export var export_data_system : ExportDataSystem
 
 var item_dict : Dictionary
 var item_bool_dict : Dictionary
@@ -12,7 +14,7 @@ func GetFreeId() -> int:
 
 var main_popup : PopupMenu
 func StartBake() -> void:
-	if ! main_editor:
+	if ! main_editor or ! export_data_system:
 		push_warning("Main Editor Is Null")
 		return
 	
@@ -29,32 +31,30 @@ func StartBake() -> void:
 	
 	AddNewFuncItem(
 		UiEditorConst.Save,
-		Callable(main_editor, "SaveCurrentEditorData")
+		Callable(main_editor, main_editor.F_SaveCurentData)
 		)
 
 	AddNewFuncItem(
 		UiEditorConst.Open,
-		Callable(main_editor, "NewPath")
+		Callable(main_editor, main_editor.F_NewPath)
 		)
 	
-	var id_2 : int = GetFreeId()
-	main_popup.add_check_item(UiEditorConst.AutoExport,id_2)
+	AddBoolSetting(
+		UiEditorConst.AutoExport,
+		EditorSetting.name_is_auto_export
+		)
 	
-	item_dict[id_2] = func(value: Variant) -> void: 
-		main_editor.SetSettingValue(
-		EditorConst.v_setting_is_auto_export,
-		value
+	AddBoolSetting(
+		UiEditorConst.IsQuickExport,
+		EditorSetting.name_is_quick_export
 		)
-	var value_id_2 : bool = main_editor.GetSettingValue(
-		EditorConst.v_setting_is_auto_export
-		)
-	main_popup.set_item_checked(id_2, value_id_2)
-	item_bool_dict[id_2] = value_id_2
 	
 	AddNewFuncItem(
 		UiEditorConst.Export,
-		Callable(main_editor, "ExportCurentScene")
+		Callable(export_data_system, export_data_system.F_Export)
 		)
+	
+	
 	
 func AddNewFuncItem(text_item : String, calable : Callable) -> void:
 	var id = GetFreeId()
@@ -63,7 +63,21 @@ func AddNewFuncItem(text_item : String, calable : Callable) -> void:
 		push_error("calable Is Not Valid")
 		return
 	item_dict[id] = calable
-	
+
+func AddBoolSetting(text_item : String, setting_text : String) -> void:
+	var id : int = GetFreeId()
+	main_popup.add_check_item(text_item,id)
+		
+	item_dict[id] = func(value: Variant) -> void: 
+		main_editor.SetSettingValue(
+		setting_text,
+		value
+		)
+	var value_id : bool = main_editor.GetSettingValue(
+		setting_text
+		)
+	main_popup.set_item_checked(id, value_id)
+	item_bool_dict[id] = value_id
 
 func ItemSelected( id : int ) -> void:
 	

@@ -41,7 +41,7 @@ func StartBake() -> void:
 		rename_but.pressed.connect(RenameSelectedScene)
 
 var curent_layer : EditorLayer
-func LoadLayer( layer : EditorLayer, ind : int = -1 ) -> void:
+func LoadLayer( layer : EditorLayer, id : int = -1 ) -> void:
 	
 	scene_option.clear()
 	
@@ -63,7 +63,7 @@ func LoadLayer( layer : EditorLayer, ind : int = -1 ) -> void:
 		LocalDataKey,EditorConst.scene_metadata_file_id
 		)
 	if metadata_obj is int:
-		if metadata_obj == LeFileSystem.ObjectIdNotFind:
+		if metadata_obj == Error.ERR_FILE_NOT_FOUND:
 			var new_metadata := LeScenesMetadataFile.new()
 			new_metadata.layer_data_key = layer.resource_name
 			local_file_system.AddObjInArray(
@@ -77,17 +77,18 @@ func LoadLayer( layer : EditorLayer, ind : int = -1 ) -> void:
 		push_error("Metadata ERROR")
 		return
 	
+	var last_ind : int 
 	var file_scene_ar : Array[LeFile] = editor_save.GetArFromKey(layer.resource_name)
 	## ХРУПКАЯ ПРОВЕРКА, НО ПОЛНАЯ ПРОВЕРКА СИЛИШКОМ ДОЛГАЯ
 	for scene : LeFile in file_scene_ar:
 		if scene is LeSceneFile:
-			AddNewScene(scene,scene.id_,false)
+			var new_ind : int = AddNewScene(scene,scene.id_,false)
+			if scene.id_ == id:
+				last_ind = new_ind
 	
-	var last_ind : int
-	if ind == -1:
+	
+	if id == LayerManager.NullSceneId:
 		last_ind = scene_option.get_selectable_item(true)
-	else:
-		last_ind = ind
 	
 	scene_option.select(last_ind)
 	LoadSceneFromInd(last_ind)
@@ -97,7 +98,7 @@ func LoadLayer( layer : EditorLayer, ind : int = -1 ) -> void:
 var local_file_system : LeFileSystem
 var LocalDataKey : String
 
-func AddNewScene(scene : LeSceneFile, id : int = -1, is_open : bool = true) -> void: 
+func AddNewScene(scene : LeSceneFile, id : int = -1, is_open : bool = true) -> int: 
 	
 	var add_scene = scene.duplicate_deep(Resource.DEEP_DUPLICATE_ALL) ## Для ИЗОЛЯЦИИ ПРЕФАБА
 	
@@ -113,6 +114,11 @@ func AddNewScene(scene : LeSceneFile, id : int = -1, is_open : bool = true) -> v
 		scene_option.select(last_ind)
 		LoadSceneFromInd(last_ind)
 		scene_option.show_popup()
+	
+	return scene_option.item_count - ItemCountItemCountMinus
+
+const ItemCountItemCountMinus : int = 1
+
 
 func GetSaveContainer() -> SaveContainer:
 	if ! curent_layer.baker_rule:
@@ -132,9 +138,9 @@ func GetSaveContainer() -> SaveContainer:
 	var from_file_scene = local_file_system.GetObjectFromId(LocalDataKey,select_id)
 	if from_file_scene is int:
 		match from_file_scene:
-			LeFileSystem.ERROR:
+			Error.FAILED:
 				push_error("save_scene File System ERROR")
-			LeFileSystem.ObjectIdNotFind:
+			Error.ERR_FILE_NOT_FOUND:
 				push_error("save_scene Is ObjectIdNotFind")
 		push_error("save_scene ERROR")
 	elif from_file_scene is LeSceneFile: 
@@ -146,18 +152,19 @@ func GetSaveContainer() -> SaveContainer:
 		)
 	if from_file_metadata is int:
 		match from_file_metadata:
-			LeFileSystem.ERROR:
+			Error.FAILED:
 				push_error("save_scene File System ERROR")
 				return
-			LeFileSystem.ObjectIdNotFind:
+			Error.ERR_FILE_NOT_FOUND:
 				push_error("save_scene Is ObjectIdNotFind")
 				return
 		push_error("save_scene ERROR")
 		return
 	elif from_file_metadata is LeScenesMetadataFile:
-		from_file_metadata.scene_import[from_file_scene.id_] = scene_saver.GetValidDataNameArray(
+		from_file_metadata.scene_import[from_file_scene.id_] = scene_saver.GetValidLinkNameArray(
 			curent_layer.baker_rule, actual_scene.graph_node_data_ar
 			)
+		from_file_metadata.curent_scene_id = select_id
 		
 	var save_container := SaveContainer.new()
 	save_container.data_key = LocalDataKey
@@ -173,6 +180,32 @@ func GetSaveContainer() -> SaveContainer:
 	
 	save_container.le_file_ar = local_file_system.GetArFromKey(LocalDataKey)
 	return save_container
+
+func GetCurentExportLink() -> Array[ExportLink]:
+	
+	var export_link_ar : Array[ExportLink]
+	
+	if ! scene_saver or ! curent_layer.baker_rule or ! scene_option:
+		push_error("GetCurentExportLink ERROR")
+		return export_link_ar
+	
+	var graph_node_data_ar = scene_saver.GetActualScene().graph_node_data_ar
+	if ! graph_node_data_ar:
+		push_error("GetCurentExportLink ERROR")
+		return export_link_ar
+	
+	var name_ar = scene_saver.GetValidLinkNameArray(
+		curent_layer.baker_rule,graph_node_data_ar)
+	
+	for link_name in name_ar:
+		var export_link := ExportLink.new()
+		export_link.data_key = curent_layer.resource_name
+		export_link.id_obj = scene_option.get_selected_id()
+		export_link.link_name = link_name
+		
+		export_link_ar.append(export_link)
+	
+	return export_link_ar
 
 func DelSelectedScene() -> void:
 	
@@ -220,12 +253,10 @@ func LoadSceneFromInd(ind : int) -> void:
 	var scene_file = local_file_system.GetObjectFromId(LocalDataKey,selected_id)
 	
 	if scene_file is int:
-		if scene_file == LeFileSystem.ERROR or scene_file == LeFileSystem.ObjectIdNotFind:
+		if scene_file == Error.ERR_FILE_NOT_FOUND or scene_file == Error.FAILED:
 			pass # Если понадобиться обработка конкретных ошибок
 		push_error("ItemSelected: scene_file Is ObjectIdNotFind Or ERROR")
 	elif scene_file is LeSceneFile:
 		scene_loader.LoadScene(scene_file)
-		
-		main_editor.SetSettingValue(EditorSetting.Scene, ind)
 	else:
 		push_error("ItemSelected: scene_file Is Not LeSceneFile")

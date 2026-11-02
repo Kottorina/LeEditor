@@ -5,7 +5,6 @@ class_name LayerManager
 
 @export_group("System")
 @export var scene_manager : SceneManager
-
 @export var ui_manager : UiNodeManager
 
 @export_group("Ui")
@@ -42,11 +41,22 @@ func StartBake() -> void:
 		push_warning("Id In LayerManager Load Setting Is Too Big")
 		return
 	
-	var current_ind_scene : int = main_editor.GetSettingValue(EditorSetting.Scene)
-	
+
 	layer_option.select(current_id)
 	
-	StartLoadLayer( item_ar[current_id], current_ind_scene )
+	StartLoadLayer( item_ar[current_id], GetCurentSceneId(item_ar[current_id].resource_name) )
+
+const ArrayMetadataGoodSize : int = 1
+
+func GetCurentSceneId( data_key : String ) -> int:
+	var cur_metadata_ar = main_editor.GetActualEditorSave().FindFile(
+		LeScenesMetadataFile,data_key
+		)
+	var current_ind_scene : int = NullSceneId
+	if cur_metadata_ar is Array:
+		if cur_metadata_ar.size() == ArrayMetadataGoodSize:
+			current_ind_scene = cur_metadata_ar.pop_back().curent_scene_id
+	return current_ind_scene
 
 func ItemSelected(id : int) -> void:
 	if item_ar.size() < id:
@@ -54,13 +64,12 @@ func ItemSelected(id : int) -> void:
 		return
 	
 	main_editor.SaveCurrentEditorData() ## Что бы не терять данные при переключение слоев
-	
 	main_editor.SetSettingValue(EditorSetting.Layer, id)
 	
-	StartLoadLayer(item_ar[id])
-	
+	StartLoadLayer(item_ar[id], GetCurentSceneId(item_ar[id].resource_name))
 
-func StartLoadLayer( layer : EditorLayer, scene_ind : int = -1) -> void:
+const NullSceneId : int = -1
+func StartLoadLayer( layer : EditorLayer, scene_ind : int = NullSceneId) -> void:
 	if ! ui_manager or ! scene_manager:
 		push_error("ItemSelected ERROR")
 		return

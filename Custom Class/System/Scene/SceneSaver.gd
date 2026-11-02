@@ -31,8 +31,8 @@ func StartBake() -> void:
 func GetActualScene() -> LeSceneFile:
 	var scene := LeSceneFile.new() 
 	
-	if ! graph_manager or ! ui_node_manager:
-		push_error("GetActualScene Is Null")
+	if ! graph_manager or ! ui_node_manager or ! direction_instruction_key:
+		push_error("GetActualScene ERROR")
 		return
 	
 	var all_editor_geaph_node = graph_manager.GetAllEditorGraphNode()
@@ -68,8 +68,6 @@ func GetActualScene() -> LeSceneFile:
 			continue
 		
 		for connection in graph_manager.get_connection_list_from_node(graph_node.name):
-			
-			var full_connection_line := FullConnectionLine.new()
 			
 			var from_data : GraphNodeData
 			var to_data : GraphNodeData
@@ -147,8 +145,8 @@ func GetActualScene() -> LeSceneFile:
 				to_data.instruction_key,to_port_is_left,to_port
 				)
 			
-			#if dir_node.instruction_key == direction_instruction_key:
-				
+			var full_connection_line := FullConnectionLine.new()
+			
 			full_connection_line.from_data = from_data
 			full_connection_line.to_data = to_data
 			full_connection_line.from_key = from_data_key
@@ -217,12 +215,7 @@ func GetValueFromNodeAndType(node_type : EditorConst.BodyNode, ui_node : Control
 			
 	return
 
-func GetActulaSceneMetadata() -> LeScenesMetadataFile:
-	var scene_metadata := LeScenesMetadataFile.new() 
-	
-	return scene_metadata
-
-func GetValidDataNameArray( 
+func GetValidLinkNameArray( 
 	baker : BakerRule, 
 	graph_node_data_ar : Array[GraphNodeData] 
 	) -> Array[String]:
@@ -233,7 +226,6 @@ func GetValidDataNameArray(
 	
 	var valid_data_name_ar : Array[String]
 	
-	var all_editor_geaph_node = graph_manager.GetAllEditorGraphNode()
 	for graph_node_data in graph_node_data_ar:
 		if graph_node_data.instruction_key == baker.GetStartInstructionKey():
 			valid_data_name_ar.append(

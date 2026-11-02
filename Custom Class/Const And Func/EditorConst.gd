@@ -1,16 +1,7 @@
 extends Resource
 class_name EditorConst
 
-const f_set_setting_value : String = "SetSettingValue"
-const f_get_setting_value : String = "GetSettingValue"
-
-const v_setting_is_auto_export : String = "is_auto_export"
-
-const StartBake : String = "StartBake"
-const GetSaveContainer : String = "GetSaveContainer"
-
 const scene_metadata_file_id : int = 0
-
 
 const ui_graph_node_direction_data_key := DataKey.FirstData ## Место Хранение Данных О Направлении
 const ui_graph_node_start_data_key := DataKey.FirstData ## Место Хранение Данных О Имени Стартового Нода

@@ -4,11 +4,16 @@ class_name UiEditorConst
 # /
 const Empty : String = "Is Empty"
 
-const AutoExport : String = "Is Auto Export"
 const Save : String = "Save"
 const Open : String = "Open"
 const File : String = "File"
+
 const Export : String = "Export"
+const StartExport : String = "Start Export"
+const ExportIsRecursiveLink : String = "Is Recursive Link"
+
+const IsQuickExport : String = "Is Quick Export"
+const AutoExport : String = "Is Auto Export"
 
 const CurentLayer : String = "Layer: " 
 
