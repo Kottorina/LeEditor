@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cv7jwmmq5cb4p"]
 
 [ext_resource type="Script" uid="uid://ct3vea5bq5x5v" path="res://addons/LeEditor/Main Scene/MainEditor.gd" id="1_t6pu0"]
-[ext_resource type="Resource" uid="uid://bbjy6icf6578s" path="res://addons/LeEditor/Objects/EditorSetting.tres" id="2_bqliu"]
+[ext_resource type="Resource" uid="uid://bsk6d3w8csdxf" path="res://addons/LeEditor/Objects/EditorSetting.tres" id="2_bqliu"]
 [ext_resource type="Theme" uid="uid://bwsyptdvotogc" path="res://addons/LeEditor/Objects/Theme/EditorTheme.tres" id="2_cw4tc"]
 [ext_resource type="Script" uid="uid://b17u2anbshfxq" path="res://addons/LeEditor/Custom Class/System/Ui/FileUi.gd" id="3_bs28w"]
 [ext_resource type="Resource" uid="uid://cko48jkmhoksf" path="res://addons/LeEditor/Objects/Ui Node Instr/Empty/EmptyGraphNode.tres" id="3_m4bvh"]
@@ -43,7 +43,7 @@ PanelContainer/styles/panel = SubResource("StyleBoxFlat_dltes")
 script = ExtResource("1_t6pu0")
 editor_setting = ExtResource("2_bqliu")
 export_data_system = NodePath("ExportDataManager")
-system_ar = [NodePath("Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/FileUi"), NodePath("Panel/BaseEditorContainer/GraphManager"), NodePath("ExportDataManager/ExportWindow"), NodePath("UiNodeManager/AddNodePopupManager"), NodePath("UiNodeManager/UiNodeMaker"), NodePath("UiNodeManager"), NodePath("SceneManager"), NodePath("LayerManager"), NodePath("SceneManager/SceneSaver")]
+system_ar = [NodePath("Panel/BaseEditorContainer/UpPanel/VBoxContainer/UpPanel/FileUi"), NodePath("Panel/BaseEditorContainer/GraphManager"), NodePath("ExportDataManager/ExportWindow"), NodePath("UiNodeManager/AddNodePopupManager"), NodePath("UiNodeManager/UiNodeMaker"), NodePath("UiNodeManager"), NodePath("SceneManager"), NodePath("LayerManager"), NodePath("SceneManager/SceneSaver"), NodePath("ExportDataManager")]
 FileNameLab = NodePath("Panel/BaseEditorContainer/UpPanel/VBoxContainer/FileName")
 empty_graph_node_instr = ExtResource("3_m4bvh")
 direction_graph_node_instr = ExtResource("4_m4bvh")

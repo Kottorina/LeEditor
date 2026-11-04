@@ -145,14 +145,24 @@ func GetActualScene() -> LeSceneFile:
 				to_data.instruction_key,to_port_is_left,to_port
 				)
 			
-			var full_connection_line := FullConnectionLine.new()
+			if ! scene.full_link.has(from_data):
+				scene.full_link[from_data] = LineGroup.new()
 			
-			full_connection_line.from_data = from_data
-			full_connection_line.to_data = to_data
-			full_connection_line.from_key = from_data_key
-			full_connection_line.to_key = to_data_key
-			full_connection_line.direction = dir_direction
-			scene.full_connection_line_ar.append(full_connection_line)
+			var full_line := FullLine.new()
+			full_line.to_data = to_data
+			full_line.from_key = from_data_key
+			full_line.to_key = to_data_key
+			
+			var line_group : LineGroup = scene.full_link[from_data]
+			
+			match dir_direction:
+				EditorConst.Direction.omnidir:
+					line_group.link_forward.append(full_line)
+					line_group.link_back.append(full_line)
+				EditorConst.Direction.forward:
+					line_group.link_forward.append(full_line)
+				EditorConst.Direction.backward:
+					line_group.link_back.append(full_line)
 	
 	return scene
 

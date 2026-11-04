@@ -8,6 +8,8 @@ func GetStartInstructionKey() -> String:
 	push_error("start_node_preset Is Null")
 	return UiEditorConst.Empty
 
+@export var bake_graph_data_preset : BakeGraphDataPreset
+
 #var ui_const_func := UiConstFunc.new()
 #var path_node_const := PathNodeConst.new()
 
