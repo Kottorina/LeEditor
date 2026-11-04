@@ -1,9 +1,17 @@
 [gd_resource type="Resource" script_class="BakerRule" format=3 uid="uid://dtc4karddexfy"]
 
 [ext_resource type="Script" uid="uid://bqes3c4ktelue" path="res://addons/LeEditor/Custom Class/Export/Bakers/BakerRule.gd" id="1_k0dvp"]
+[ext_resource type="Script" uid="uid://drl3b8lwuwb1d" path="res://addons/LeEditor/Custom Class/Export/Bakers/MakeStepRule.gd" id="1_kbp35"]
 [ext_resource type="Resource" uid="uid://dhybnp2lry6j5" path="res://addons/LeEditor/Objects/Ui Node Instr/Dialogue/DialogueStart.tres" id="2_1m0av"]
+
+[sub_resource type="Resource" id="Resource_28lud"]
+script = ExtResource("1_kbp35")
+graph_node_type = 4
+step_type = 1
+metadata/_custom_type_script = "uid://drl3b8lwuwb1d"
 
 [resource]
 script = ExtResource("1_k0dvp")
 start_node_preset = ExtResource("2_1m0av")
+make_step_ar = Array[ExtResource("1_kbp35")]([SubResource("Resource_28lud")])
 metadata/_custom_type_script = "uid://bqes3c4ktelue"

@@ -47,12 +47,12 @@ func MakeImportData(start_link_ar : Array[ExportLink]) -> Array[DataContainer]: 
 		push_error("curent_save Is Null")
 		return data_container_ar
 	
-	var processing_link : Array[ExportLink] = start_link_ar
-	var processed_link : Array[ExportLink]
-	while ! processing_link.is_empty():
+	var free_link : Array[ExportLink] = start_link_ar
+	var occupied_link : Array[ExportLink]
+	while ! free_link.is_empty():
 		
-		var curent_link = processing_link.pop_back()
-		processed_link.append(curent_link)
+		var curent_link = free_link.pop_back()
+		occupied_link.append(curent_link)
 		
 		var curent_baker : BakerRule = FromDataKeyToBakerRule(curent_link.data_key)
 		var obj : LeSceneFile = curent_save.GetObjectFromId(curent_link.data_key,curent_link.id_obj)
@@ -75,9 +75,9 @@ func MakeImportData(start_link_ar : Array[ExportLink]) -> Array[DataContainer]: 
 			)
 		
 		for link in new_bake_data_container.new_link_ar:
-			if IsLinkUnic(processing_link, link) and IsLinkUnic(processed_link, link):
+			if IsLinkUnic(free_link, link) and IsLinkUnic(occupied_link, link):
 				## А ТАКЖЕ ПРОВЕРКА ПО UI
-				processing_link.append(link) 
+				free_link.append(link) 
 		
 		print(new_bake_data_container.data_container.step_ar)
 		data_container_ar.append(new_bake_data_container.data_container)
@@ -98,10 +98,18 @@ func BakeFullLink(
 	
 	var data_container := DataContainer.new()
 	
+	var free_graph_node_data : Array[GraphNodeData]
+	free_graph_node_data.append(start_graph_data)
 	
+	var occupied_graph_node_data : Array[GraphNodeData]
 	
-	
-	
+	while ! free_graph_node_data.is_empty():
+		
+		var curent_graph_node_data = free_graph_node_data.pop_back()
+		occupied_graph_node_data.append(curent_graph_node_data)
+		
+		print(full_link[curent_graph_node_data])
+		
 	
 	var bake_data_container := BakeDataContainer.new()
 	bake_data_container.data_container = data_container
